@@ -20,8 +20,8 @@
 		var _responseLentinyvpn;
 		var noChange = 0;
 		var status_time = 1;
-		var option_acl_mode = [['0', '不代理'], ['1', 'gfwlist黑名单'], ['2', '大陆白名单'], ['3', '全局模式']];
-		var option_acl_mode_name = ['不代理', 'gfwlist黑名单', '大陆白名单', '全局模式'];
+		var option_acl_mode = [['0', '不代理'], ['1', 'gfwlist黑名单'], ['2', '大陆白名单'], ['3', '全局模式'], ['4', '兼容模式']];
+		var option_acl_mode_name = ['不代理', 'gfwlist黑名单', '大陆白名单', '全局模式', '兼容模式'];
 		var option_acl_port = [['80,443', '80,443'], ['22,80,443', '22,80,443'], ['all', '全部端口'],['0', '自定义']];
 		var option_acl_port_name = ['80,443', '22,80,443', '全部端口', '自定义'];
 		var option_arp_list = [];
@@ -308,9 +308,9 @@
 			] );
 			this.headerSet( [ '主机别名', '主机IP地址', 'MAC地址', '访问控制', '目标端口', '自定义端口'] );
 			if (typeof(dbus["sgame_acl_node_max"]) == "undefined"){
-				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>全部主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>全部主机 - mac</small></i>','<select id="_sgame_acl_default_mode1" name="sgame_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>全部主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
+				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>全部主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>全部主机 - mac</small></i>','<select id="_sgame_acl_default_mode1" name="sgame_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option><option value="4">兼容模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>全部主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
 			}else{
-				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>其它主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>其它主机 - mac</small></i>','<select id="_sgame_acl_default_mode1" name="sgame_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>其它主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
+				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>其它主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>其它主机 - mac</small></i>','<select id="_sgame_acl_default_mode1" name="sgame_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option><option value="4">兼容模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>其它主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
 			}
 			
 			if(typeof(dbus["sgame_acl_default_mode"]) != "undefined" ){
@@ -899,7 +899,7 @@
 			<div id="sgame_basic_proxypannel" class="section"></div>
 			<script type="text/javascript">
 				$('#sgame_basic_proxypannel').forms([
-					{ title: '代理模式', name:'sgame_acl_default_mode',type:'select',options:option_acl_mode,value: dbus.sgame_acl_default_mode || "0"}
+					{ title: '代理模式', name:'sgame_acl_default_mode',type:'select',options:option_acl_mode,value: dbus.sgame_acl_default_mode || "4"}
 				]);
 			</script>
 		</div>
@@ -909,6 +909,7 @@
 	<div class="section content" id="sesdivnotes" style="display:">
 			<li> 本插件只是作为网络前端的加速方案，需要配合服务器使用</li>
 			<li> 将远程服务器的服务端口映射到本地路由上后，再使用本地客户端连接</li>
+			<li> 兼容模式可以与SS、V2ray等插件兼容使用，但主模式为不代理，只有访问控制里的配置生效</li>
 	</div>
 	</div>
 	<!-- ------------------ 表格2 --------------------- -->

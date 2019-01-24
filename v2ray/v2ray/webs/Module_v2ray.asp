@@ -1263,7 +1263,7 @@
 			<script type="text/javascript">
 				$('#v2ray_addon_pannel').forms([
 					{ title: 'V2Ray 自动守护', multi: [
-						{ name: 'v2ray_basic_watchdog',type: 'select', options:[['0', '禁用'], ['1', '开启']], value: dbus.v2ray_basic_watchdog || "1", suffix: ' &nbsp;&nbsp;检测间隔：' },
+						{ name: 'v2ray_basic_watchdog',type: 'select', options:[['0', '禁用'], ['1', '开启']], value: dbus.v2ray_basic_watchdog || "0", suffix: ' &nbsp;&nbsp;检测间隔：' },
 						{ name: 'v2ray_basic_watchdog_time', type: 'select', options:option_time_watch, value: dbus.v2ray_basic_watchdog_time || "1",suffix: ' &nbsp;&nbsp;掉线重连方案：' },
 						{ name: 'v2ray_basic_watchdog_mod', type: 'select', options:option_time_mod, value: dbus.v2ray_basic_watchdog_mod || "1",suffix: ' &nbsp;&nbsp;' },
 					]},
