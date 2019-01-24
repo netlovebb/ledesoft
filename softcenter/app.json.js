@@ -66,15 +66,15 @@
             "version": "0.5"
         }, 
         {
-            "build_date": "2019-01-24_20:13:24", 
-            "changelog": "增加兼容模式", 
+            "build_date": "2019-01-24_23:26:42", 
+            "changelog": "UI微调", 
             "description": "外服游戏解决方案", 
             "home_url": "Module_sgame.asp", 
-            "md5": "e0ebea34711b7d919d24553eea176c0b", 
+            "md5": "b6be2ef31d6adff7e362bdc2028f903b", 
             "name": "sgame", 
             "tar_url": "sgame/sgame.tar.gz", 
             "title": "游戏加速器", 
-            "version": "0.8.5"
+            "version": "0.8.6"
         }, 
         {
             "build_date": "2018-09-23_18:26:03", 
@@ -312,15 +312,15 @@
             "version": "0.3"
         }, 
         {
-            "build_date": "2017-12-19_20:30:49", 
-            "changelog": "增加重新生成证书按钮", 
+            "build_date": "2019-01-25_00:21:08", 
+            "changelog": "优化安装提示", 
             "description": "与你的网络无缝并行", 
             "home_url": "Module_anyconnect.asp", 
-            "md5": "c377cf9599922bce535f7dada07b42bc", 
+            "md5": "614fb961a0a44bc618cc2dc359fb2c65", 
             "name": "anyconnect", 
             "tar_url": "anyconnect/anyconnect.tar.gz", 
             "title": "AnyConnect Server", 
-            "version": "0.8"
+            "version": "0.9"
         }, 
         {
             "build_date": "2017-10-25_10:49:24", 
