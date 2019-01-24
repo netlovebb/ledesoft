@@ -1,9 +1,9 @@
 {
-"version":"0.8.5",
-"md5":"e0ebea34711b7d919d24553eea176c0b",
+"version":"0.8.6",
+"md5":"b6be2ef31d6adff7e362bdc2028f903b",
 "home_url":"Module_sgame.asp",
 "title":"游戏加速器",
 "description":"外服游戏解决方案",
-"changelog":"增加兼容模式",
-"build_date":"2019-01-24_20:13:24"
+"changelog":"UI微调",
+"build_date":"2019-01-24_23:26:42"
 }

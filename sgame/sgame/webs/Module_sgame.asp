@@ -353,7 +353,6 @@
 			elem.display('sgame_tabs', a);
 			elem.display('sgame_basic_tab', a);
 			elem.display('sgame_basic_tab_tinyvpn', a);
-			elem.display('sgame_basic_tab_proxy', a&&d);
 			elem.display('sgame_basic_tab_udp2raw', a&&b);
 			elem.display(PR('_sgame_basic_server'), !b);
 			elem.display(PR('_sgame_basic_port'), !b);
@@ -480,22 +479,27 @@
 			if(obj=='app1'){
 				var b  = E('_sgame_udp2raw_enable').checked;
 				elem.display('sgame_basic_tab_udp2raw', b);
+				elem.display('stop-button', true);
 				elem.display('save-button', true);
 				noChange=2001;
 			}else if(obj=='app3'){
 				elem.display('save-button', false);
+				elem.display('stop-button', false);
 				noChange=0;
 				setTimeout("get_udp2raw_log();", 200);
 			}else if(obj=='app4'){
 				elem.display('save-button', false);
+				elem.display('stop-button', false);
 				noChange=0;
 				setTimeout("get_tinyvpn_log();", 200);
 			}else if(obj=='app5'){
 				elem.display('save-button', false);
+				elem.display('stop-button', false);
 				noChange=0;
 				setTimeout("get_sgame_log();", 200);
 			}else{
 				elem.display('save-button', true);
+				elem.display('stop-button', true);
 				noChange=2001;
 			}
 			if(obj=='fuckapp'){
@@ -509,6 +513,7 @@
 				elem.display('sgame_wblist_tab', false);
 				elem.display('sgame_acl_tab', false);
 				E('save-button').style.display = "";
+				E('stop-button').style.display = "";
 			}
 		}
 
@@ -536,7 +541,7 @@
 			var b  = E('_sgame_udp2raw_enable').checked;
 			var c  = E('_sgame_basic_cron').checked;
 			var d  = E('_sgame_basic_proxy').checked;
-			elem.display('sgame_basic_tab_proxy', a&&d);
+			elem.display(PR('_sgame_acl_default_mode'), d);
 			elem.display('sgame_basic_tab_udp2raw', a&&b);
 			elem.display('udp2raw_log_tab', a&&b);
 			elem.display(PR('_sgame_basic_server'), !b);
@@ -663,7 +668,7 @@
 				success: function(response){
 					if (response.result == id){
 						if(E('_sgame_basic_enable').checked){
-							showMsg("msg_success","提交成功","<b>成功提交数据</b>");
+							showMsg("msg_success","提交成功","<b>SGAME成功提交数据</b>");
 							$('#msg_warring').hide();
 							setTimeout("$('#msg_success').hide()", 500);
 							x = 4;
@@ -671,7 +676,7 @@
 						}else{
 							// when shut down ss finished, close the log tab
 							$('#msg_warring').hide();
-							showMsg("msg_success","提交成功","<b>sgame成功关闭！</b>");
+							showMsg("msg_success","提交成功","<b>SGAME成功关闭！</b>");
 							setTimeout("$('#msg_success').hide()", 4000);
 							setTimeout("tabSelect('fuckapp')", 4000);
 						}
@@ -688,6 +693,48 @@
 			});
 		}
 
+		function manipulate_conf(script, arg){
+			var dbus3 = {};
+			if(arg == 2){
+				tabSelect("app5");
+			}
+			var id = parseInt(Math.random() * 100000000);
+			var postData = {"id": id, "method": script, "params":[arg], "fields": dbus3 };
+			$.ajax({
+				type: "POST",
+				url: "/_api/",
+				async: true,
+				cache:false,
+				data: JSON.stringify(postData),
+				dataType: "json",
+				success: function(response){
+					if (script == "sgame_config.sh"){
+						if (arg == 2){
+							if (response.result == id){
+								showMsg("msg_success","提交成功","<b>服务器暂停成功！</b>");
+								setTimeout("$('#msg_success').hide()", 4000);								
+							}else{
+								$('#msg_warring').hide();
+								showMsg("msg_error","提交失败","<b>服务器暂停失败！错误代码：" + response.result + "</b>");
+							}
+							setTimeout("tabSelect('app5')", 500);
+							setTimeout("window.location.reload()", 500);
+						}else if (arg == 1){
+							if (response.result == id){
+								showMsg("msg_success","提交成功","<b>服务器运行成功！</b>");
+								setTimeout("$('#msg_success').hide()", 4000);								
+							}else{
+								$('#msg_warring').hide();
+								showMsg("msg_error","提交失败","<b>服务器运行失败！错误代码：" + response.result + "</b>");
+							}
+							setTimeout("tabSelect('app5')", 500);
+							setTimeout("window.location.reload()", 800);
+						}
+					}
+				}
+			});
+		}
+
 		function get_udp2raw_log(){
 			$.ajax({
 				url: '/_temp/udp2raw_log.txt',
@@ -697,7 +744,7 @@
 				cache:false,
 				success: function(responseudp2raw) {
 					var retArea = E("_udp2raw_basic_log");
-					if (responseudp2raw.search("XU6J03M6") == -1) {
+					if (responseudp2raw.search("XU6J03M6") != -1) {
 						retArea.value = responseudp2raw.replace("XU6J03M6", " ");
 						retArea.scrollTop = retArea.scrollHeight;
 						return true;
@@ -732,7 +779,7 @@
 				cache:false,
 				success: function(responsetinyvpn) {
 					var retArea = E("_tinyvpn_basic_log");
-					if (responsetinyvpn.search("XU6J03M6") == -1) {
+					if (responsetinyvpn.search("XU6J03M6") != -1) {
 						retArea.value = responsetinyvpn.replace("XU6J03M6", " ");
 						retArea.scrollTop = retArea.scrollHeight;
 						return true;
@@ -767,7 +814,7 @@
 				cache:false,
 				success: function(response) {
 					var retArea = E("_sgame_basic_log");
-					if (response.search("XU6J03M6") == -1) {
+					if (response.search("XU6J03M6") != -1) {
 						retArea.value = response.replace("XU6J03M6", " ");
 						retArea.scrollTop = retArea.scrollHeight;
 						return true;
@@ -845,6 +892,7 @@
 			<script type="text/javascript">
 				$('#identification').forms([
 					{ title: '已安装无限制TinyVPN服务器端，在路由上配置代理', name:'sgame_basic_proxy',type:'checkbox',  value: dbus.sgame_basic_proxy == 1 },
+					{ title: '代理模式', name:'sgame_acl_default_mode',type:'select',options:option_acl_mode,value: dbus.sgame_acl_default_mode || "4"},
 					{ title: '开启Udp2raw突破UDP屏蔽或QOS限速', name:'sgame_udp2raw_enable',type:'checkbox',  value: dbus.sgame_udp2raw_enable == 1 },
 					{ title: '定时自动开关', name:'sgame_basic_cron',type:'checkbox',  value: dbus.sgame_basic_cron == 1 },
 					{ title: '定时开启', multi: [
@@ -889,17 +937,6 @@
 					{ title: 'TinyVPN连接密码', name:'sgame_basic_password',type:'password',size: 20,maxLength:30,value: Base64.decode(dbus.sgame_basic_password), peekaboo: 1, suffix: ' 如开启udp2raw可以无需配置密码' },
 					{ title: '本地子网', name:'sgame_basic_subnet',type:'text',size: 18,value:dbus.sgame_basic_subnet|| "10.22.22.0" },
 					{ title: '其它自定义参数', name:'sgame_basic_other',type:'text',size: 100,value: Base64.decode(dbus.sgame_basic_other) || "-f2:2 --timeout 0 --keep-reconnect --log-level 2" ,suffix: ' 其它自定义参数，请手动输入，如-f 20:10' },
-				]);
-			</script>
-		</div>
-	</div>
-	<div class="box boxr1" id="sgame_basic_tab_proxy" style="margin-top: 0px;">
-		<div class="heading"></div>
-		<div class="content" style="margin-top: -20px;">
-			<div id="sgame_basic_proxypannel" class="section"></div>
-			<script type="text/javascript">
-				$('#sgame_basic_proxypannel').forms([
-					{ title: '代理模式', name:'sgame_acl_default_mode',type:'select',options:option_acl_mode,value: dbus.sgame_acl_default_mode || "4"}
 				]);
 			</script>
 		</div>
@@ -1001,5 +1038,6 @@
 	<div id="msg_success" class="alert alert-success icon" style="display:none;"></div>
 	<div id="msg_error" class="alert alert-error icon" style="display:none;"></div>
 	<button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">提交 <i class="icon-check"></i></button>
+	<button type="button" value="Save" id="stop-button" onclick="manipulate_conf('sgame_config.sh', 2)" class="btn">暂停 <i class="icon-disable"></i></button>
 	<script type="text/javascript">init_sgame();</script>
 </content>
