@@ -429,6 +429,14 @@
 		function conf2obj(){
 		}
 
+		function go_hub(cid){
+			if(cid == 1){
+				window.open("https://hub.docker.com/r/" + (E('new_name').textContent));	
+			}else{
+				window.open("https://hub.docker.com/r/" + (E('old_name').textContent));	
+			}
+		}	
+
 		function unique_array(array){
 			var r = [];
 			for(var i = 0, l = array.length; i < l; i++) {
@@ -455,11 +463,8 @@
 		function show_edit_panel(editcontainername){
 			elem.display('docker_tab_container', true);
 			E("container_edit_name").innerHTML = editcontainername;
+			E("old_name").innerHTML = dbus["docker_" + editcontainername + "_image"];
 			E("_docker_edit_auto").value = dbus["docker_" + editcontainername + "_auto"] == "1";
-			E("_docker_edit_net").value = dbus["docker_" + editcontainername + "_net"];
-			E("_docker_edit_file").value = Base64.decode(dbus["docker_" + editcontainername + "_file"]);
-			E("_docker_edit_port").value = Base64.decode(dbus["docker_" + editcontainername + "_port"]);
-			E("_docker_edit_env").value = Base64.decode(dbus["docker_" + editcontainername + "_env"]);
 			E("_docker_edit_other").value = Base64.decode(dbus["docker_" + editcontainername + "_other"]);
 			E("_docker_edit_other").scrollIntoView(); 
 		}
@@ -481,19 +486,6 @@
 			var b  = E('_docker_basic_login').checked;
 			elem.display(PR('_docker_basic_user'), b);
 			elem.display(PR('_docker_basic_passwd'), b);
-
-			var h = (E('_docker_new_net').value == 'bridge');
-			elem.display(PR('_docker_new_port'), h);
-		
-			var ee = (E('_docker_edit_net').value == 'bridge');
-			if(ee){
-				elem.display(PR('_docker_edit_port'), true);
-				var cc = E('container_edit_name').textContent;
-				E("_docker_edit_port").value = Base64.decode(dbus["docker_" + cc + "_port"]);
-			}else{
-				elem.display(PR('_docker_edit_port'), false);
-				E("_docker_edit_port").value = ""
-			}
 
 			return true;
 		}
@@ -679,10 +671,6 @@
 				dbus3["docker_"+ el + "_name"] = E('_docker_new_name').value;
 				dbus3["docker_"+ el + "_auto"] = E('_docker_new_auto').checked ? '1':'0';
 				dbus3["docker_"+ el + "_image"] = E('new_name').textContent;
-				dbus3["docker_"+ el + "_net"] = E('_docker_new_net').value;
-				dbus3["docker_"+ el + "_file"] = Base64.encode(E('_docker_new_file').value);
-				dbus3["docker_"+ el + "_port"] = Base64.encode(E('_docker_new_port').value);
-				dbus3["docker_"+ el + "_env"] = Base64.encode(E('_docker_new_env').value);
 				dbus3["docker_"+ el + "_other"] = Base64.encode(E('_docker_new_other').value);
 				tabSelect("app6");
 			}else if(arg == 6){
@@ -703,10 +691,6 @@
 				var ec = E('container_edit_name').textContent;
 				dbus3["docker_table_send"] = ec;
 				dbus3["docker_"+ ec + "_auto"] = E('_docker_edit_auto').checked ? '1':'0';
-				dbus3["docker_"+ ec + "_net"] = E('_docker_edit_net').value;
-				dbus3["docker_"+ ec + "_file"] = Base64.encode(E('_docker_edit_file').value);
-				dbus3["docker_"+ ec + "_port"] = Base64.encode(E('_docker_edit_port').value);
-				dbus3["docker_"+ ec + "_env"] = Base64.encode(E('_docker_edit_env').value);
 				dbus3["docker_"+ ec + "_other"] = Base64.encode(E('_docker_edit_other').value);
 			}
 			var id = parseInt(Math.random() * 100000000);
@@ -856,14 +840,10 @@
 			<div id="docker_basic_addpannel" class="section"></div>
 			<script type="text/javascript">
 				$('#docker_basic_addpannel').forms([
-					{ title: '当前容器使用的镜像：', suffix: '<span class="help-block"><lable id="new_name"></lable></span>'},
+					{ title: '当前容器使用的镜像：', suffix: '<span class="help-block"><lable id="new_name"></lable></span>&nbsp;&nbsp;<button id="_add_go_hub" onclick="go_hub(1);" class="btn btn-danger">点击查看镜像说明 <i class="icon-download"></i></button>'},
 					{ title: '容器名称', name:'docker_new_name',type:'text',size: 30,suffix: '* 使用英文字母和数字，不能为特殊符号或中文字符'},
 					{ title: '自动启动', name:'docker_new_auto',type:'checkbox' },
-					{ title: '网络接口', name:'docker_new_net',type:'select', options:option_docker_net },
-					{ title: '文件或文件夹挂载</br></br><font color="#B2B2B2"># 一项配置一行，格式：本地文件夹:容器文件夹<br />如将本地/mnt/sda3/downloads挂载到容器内的/Downloads：<br /># /mnt/sda3/downloads:/Downloads</font>', name:'docker_new_file',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '端口映射</br></br><font color="#B2B2B2">一项配置一行，格式：本地端口：容器端口/协议类型<br />如将OP的9002映射为容器里的TCP9001：<br />9002:9001/tcp</font>', name:'docker_new_port',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '环境变量</br></br><font color="#B2B2B2">一项配置一行，格式：变量名称:值<br /># 如将变量DATADIR配置为/unifi/data：<br />DATADIR=/unifi/data</font>', name:'docker_new_env',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '自定义配置</br></br><font color="#B2B2B2">如：-c=1024 -m=1g -i</font>', name:'docker_new_other',type:'textarea',style: 'width: 100%; height:100px;'},
+					{ title: '其它配置</br></br><font color="#B2B2B2">常用参数：<br />如将本地/mnt/sda3/downloads挂载到容器内的/Downloads：<br />-v /mnt/sda3/downloads:/Downloads<br />如将OP的9002映射为容器里的TCP9001：<br />-p  9002:9001/tcp<br /># 如将变量DATADIR配置为/unifi/data：<br />-e DATADIR=/unifi/data</font>', name:'docker_new_other',type:'textarea',style: 'width: 100%; height:200px;'},
 					{ title: '',suffix: '<button id="_add_new_now" onclick="manipulate_conf(\'docker_config.sh\', 5);" class="btn btn-success">创建容器 <i class="icon-check"></i></button>' }
 				]);
 			</script>
@@ -886,12 +866,9 @@
 			<script type="text/javascript">
 				$('#docker_basic_editpannel').forms([
 					{ title: '当前正在修改的容器名称', suffix: '<span class="help-block"><lable id="container_edit_name"></lable></span>'},
+					{ title: '查看镜像参数', suffix: '<span class="help-block"><lable id="old_name"></lable></span>&nbsp;&nbsp;<button id="_edit_go_hub" onclick="go_hub(2);" class="btn btn-danger">点击查看镜像说明 <i class="icon-download"></i></button>' },
 					{ title: '开机自动启动', name:'docker_edit_auto',type:'checkbox' },
-					{ title: '网络接口', name:'docker_edit_net',type:'select', options:option_docker_net },
-					{ title: '文件或文件夹挂载</br></br><font color="#B2B2B2"># 一项配置一行，格式：本地文件夹:容器文件夹<br />如将本地/mnt/sda3/downloads挂载到容器内的/Downloads：<br /># /mnt/sda3/downloads:/Downloads</font>', name:'docker_edit_file',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '端口映射</br></br><font color="#B2B2B2">一项配置一行，格式：本地端口：容器端口/协议类型<br />如将OP的9002映射为容器里的TCP9001：<br />9002:9001/tcp</font>', name:'docker_edit_port',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '环境变量</br></br><font color="#B2B2B2">一项配置一行，格式：变量名称:值<br /># 如将变量DATADIR配置为/unifi/data：<br />DATADIR=/unifi/data</font>', name:'docker_edit_env',type:'textarea',style: 'width: 100%; height:100px;'},
-					{ title: '自定义配置</br></br><font color="#B2B2B2">如：-c=1024 -m=1g -i</font>', name:'docker_edit_other',type:'textarea',style: 'width: 100%; height:100px;'},
+					{ title: '其它配置</br></br><font color="#B2B2B2">常用参数：<br />如将本地/mnt/sda3/downloads挂载到容器内的/Downloads：<br />-v /mnt/sda3/downloads:/Downloads<br />如将OP的9002映射为容器里的TCP9001：<br />-p  9002:9001/tcp<br /># 如将变量DATADIR配置为/unifi/data：<br />-e DATADIR=/unifi/data</font>', name:'docker_edit_other',type:'textarea',style: 'width: 100%; height:200px;'},
 					{ title: '',suffix: '<button id="_add_edit_now" onclick="manipulate_conf(\'docker_config.sh\', 10);" class="btn btn-success">更新容器配置 <i class="icon-check"></i></button>' }
 				]);
 			</script>

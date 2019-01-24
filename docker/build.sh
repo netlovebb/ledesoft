@@ -1,11 +1,11 @@
 #!/bin/sh
 
 MODULE=docker
-VERSION=0.2.1
+VERSION=0.2.2
 TITLE="Docker"
 DESCRIPTION="轻量虚拟化应用程序"
 HOME_URL=Module_docker.asp
-CHANGELOG="增加配置管理"
+CHANGELOG="调整创建容器方式"
 
 # Check and include base
 DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"
