@@ -509,15 +509,15 @@
             "version": "1.1"
         }, 
         {
-            "build_date": "2018-10-26_12:35:10", 
-            "changelog": "", 
+            "build_date": "2019-02-12_22:47:25", 
+            "changelog": "更新版本到3.6.4", 
             "description": "百度网盘同步管理工具", 
             "home_url": "Module_baidupcs.asp", 
-            "md5": "6d9e55a2c70b6db32debc53a9699b772", 
+            "md5": "be01e1fc4c1abb071282d9a151720ee0", 
             "name": "baidupcs", 
             "tar_url": "baidupcs/baidupcs.tar.gz", 
             "title": "百度网盘", 
-            "version": "0.1"
+            "version": "0.2"
         }, 
         {
             "build_date": "2017-10-12_15:16:43", 
