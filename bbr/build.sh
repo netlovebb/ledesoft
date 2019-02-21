@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MODULE=bbr
-VERSION=0.2
+VERSION=0.3
 TITLE="BBR MOD"
 DESCRIPTION=魔改BBR
 HOME_URL=Module_bbr.asp

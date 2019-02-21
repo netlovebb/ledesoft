@@ -107,7 +107,7 @@ function save(){
 </script>
 
 <div class="box">
-<div class="heading">TCP BBR拥塞控制算法<a href="#/soft-center.asp" class="btn" style="float:right;border-radius:3px;margin-right:5px;margin-top:0px;">返回</a></div>
+<div class="heading">TCP 拥塞控制算法管理器<a href="#/soft-center.asp" class="btn" style="float:right;border-radius:3px;margin-right:5px;margin-top:0px;">返回</a></div>
 <div class="content">
 	<span class="col" style="line-height:30px;width:700px">
 	TCP BBR 由谷歌开发，即 TCP 拥塞控制算法，其目的在于最大化利用网络链路。
@@ -119,10 +119,10 @@ function save(){
 <div class="content">
 <div id="bbr-fields"></div>
 <script type="text/javascript">
-var option_mode = [['cubic', '默认Cubic'],['bbr', '原版BBR'],['tcp_bbr_mod', '魔改BBR'],['tcp_bbr_tsunami', '魔改BBR→Yankee版'],['tcp_bbr_nql', '魔改BBR→南琴浪版']];
+var option_mode = [['cubic', '默认Cubic'],['olia', 'olia'],['hybla', 'hybla'],['bbr', '原版BBR'],['tcp_bbr_plus', 'BBR Plus'],['tcp_bbr_mod', '魔改BBR'],['tcp_bbr_tsunami', '魔改BBR→Yankee版'],['tcp_bbr_nql', '魔改BBR→南琴浪版']];
 $('#bbr-fields').forms([
 { title: '当前状态', text: '<font id="bbr_status" name=bbr_status color="#1bbf35">正在获取运行状态...</font>' },
-{ title: 'TCP BBR拥塞控制算法', name: 'bbr_mode', type: 'select', options: option_mode, value: dbus.bbr_mode},
+{ title: 'TCP 拥塞控制算法', name: 'bbr_mode', type: 'select', options: option_mode, value: dbus.bbr_mode},
 { title: 'TCP 最大连接数', name: 'bbr_conn', type: 'text', maxlen: 10, size: 10, value: dbus.bbr_conn || '100000'},
 ]);
 </script>
@@ -133,6 +133,7 @@ $('#bbr-fields').forms([
 	<div class="section content" id="sesdivnotes" style="display:none">
 			<li>充分利用存在一定丢包率的网络链路</li>
 			<li>降低网络延迟；</li>
+			<li>某些TCP拥塞控制算法需要升级到最新固件才能开启；</li>
 	</div>
 </div>
 <button type="button" value="Save" id="save-button" onclick="save()" class="btn btn-primary">保存 <i class="icon-check"></i></button>

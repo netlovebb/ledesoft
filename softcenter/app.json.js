@@ -279,15 +279,15 @@
             "version": "0.4"
         }, 
         {
-            "build_date": "2018-05-20_17:03:22", 
+            "build_date": "2019-02-21_19:10:28", 
             "changelog": "增加更多模块", 
             "description": "魔改BBR", 
             "home_url": "Module_bbr.asp", 
-            "md5": "ae432688ea655bacf86449c7bc4b4217", 
+            "md5": "514d7f5b6966588762f58b6f6cfb890d", 
             "name": "bbr", 
             "tar_url": "bbr/bbr.tar.gz", 
             "title": "BBR MOD", 
-            "version": "0.2"
+            "version": "0.3"
         }, 
         {
             "build_date": "2018-10-18_19:08:26", 
