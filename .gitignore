@@ -37,4 +37,5 @@ backup.sh
 /wireguard/build
 /koolddns/build
 /docker/build
+/virtual/build
 /test

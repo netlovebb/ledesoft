@@ -476,6 +476,17 @@
             "version": "2.3.4"
         }, 
         {
+            "build_date": "2019-02-25_21:35:18", 
+            "changelog": "", 
+            "description": "增强虚拟机操作系统性能", 
+            "home_url": "Module_virtual.asp", 
+            "md5": "b6564647ad0179b48debd483b2f2cfd2", 
+            "name": "virtual", 
+            "tar_url": "virtual/virtual.tar.gz", 
+            "title": "虚拟机助手", 
+            "version": "0.1"
+        }, 
+        {
             "build_date": "2018-07-01_17:38:34", 
             "changelog": "修复配件无法搜索到的问题", 
             "description": "智能家庭网关", 
