@@ -339,7 +339,7 @@ creat_ss_json(){
 	echo_date 创建SS配置文件到$CONFIG_FILE
 	if [ "$ss_basic_type" == "0" ];then
 		local mptcp
-		[ "$ss_basic_mptcp" == 0 ] && mptcp="false" || mptcp="true"
+		[ "$ss_basic_mptcp" == "0" ] && mptcp="false" || mptcp="true"
 		cat > $CONFIG_FILE <<-EOF
 			{
 			    "server":"$ss_basic_server",
