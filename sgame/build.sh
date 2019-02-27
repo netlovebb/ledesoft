@@ -1,11 +1,11 @@
 #!/bin/sh
 
 MODULE=sgame
-VERSION=0.8.6
+VERSION=0.8.7
 TITLE="游戏加速器"
 DESCRIPTION="外服游戏解决方案"
 HOME_URL=Module_sgame.asp
-CHANGELOG="UI微调"
+CHANGELOG="修复udp2waw开关失效"
 
 # Check and include base
 DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"

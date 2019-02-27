@@ -543,7 +543,7 @@
 			var d  = E('_sgame_basic_proxy').checked;
 			elem.display(PR('_sgame_acl_default_mode'), d);
 			elem.display('sgame_basic_tab_udp2raw', a&&b);
-			elem.display('udp2raw_log_tab', a&&b);
+			//elem.display('udp2raw_log_tab', a&&b);
 			elem.display(PR('_sgame_basic_server'), !b);
 			elem.display(PR('_sgame_basic_port'), !b);
 			elem.display(PR('_sgame_basic_cron_enablehour'), c);
@@ -591,7 +591,7 @@
 			var paras_chk = ["enable", "cron", "proxy"];
 			var paras_inp = ["sgame_acl_default_mode", "sgame_udp2raw_server", "sgame_udp2raw_port", "sgame_udp2raw_mode", "sgame_basic_server", "sgame_basic_port", "sgame_basic_subnet",  "sgame_basic_cron_enablehour", "sgame_basic_cron_disablehour", "sgame_basic_cron_enableminute", "sgame_basic_cron_disableminute"];
 			// collect data from checkbox
-			E("_sgame_udp2raw_enable").checked = dbus["sgame_udp2raw_enable"] == 1 ? true : false;
+			dbus["sgame_udp2raw_enable"] = E("_sgame_udp2raw_enable").checked ? '1':'0';
 			
 			for (var i = 0; i < paras_chk.length; i++) {
 				dbus["sgame_basic_" + paras_chk[i]] = E('_sgame_basic_' + paras_chk[i] ).checked ? '1':'0';
