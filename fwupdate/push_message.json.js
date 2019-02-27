@@ -6,8 +6,9 @@
 "content2":"<font color='##cc338c'>\
 <b>1. </b>升级内核到4.14.103；<br />\
 <b>2. </b>增加mptcp支持；<br />\
-<b>2. </b>增加open-vm-tools；<br />\
-<b>2. </b>增加full cone开关（网络-防火墙）；<br />\
-<b>2. </b>删除管控功能，重写后将在软件中心以插件上线；<br />\
-<b>3. </b>修复一些bug；<br />",
+<b>3. </b>增加bbrplus；<br />\
+<b>4. </b>增加open-vm-tools；<br />\
+<b>5. </b>增加full cone开关（网络-防火墙）；<br />\
+<b>6. </b>删除管控功能，重写后将在软件中心以插件上线；<br />\
+<b>7. </b>修复一些bug；<br />",
 }
