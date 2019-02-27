@@ -1,5 +1,11 @@
 Koolshare LEDE-X64 shadowsocks Changelog
 ==========================================
+2.1.9
+   - add	增加 mptcp 配置项
+   - add	增加 v2ray-plugin
+   - update	更新 shadowsocks-libev 到3.2.4
+   - update	更新 haproxy 到1.8.4
+   
 2.1.8
    - fix	回滚到2.1.6
    

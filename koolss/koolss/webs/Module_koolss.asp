@@ -2223,12 +2223,12 @@
 				error:function(){
 					get_wans_list2();
 				},
-				timeout:1000
+				timeout:10000
 			});
 		}
 		
 		function get_wans_list2(){
-			XHR.get('/cgi-bin/luci/admin/network/mwan/overview/interface_status', null,
+			XHR.get('/cgi-bin/luci/admin/status/mwan/interface_status', null,
 				function(x, mArray){
 					if (mArray.wans){
 						for ( var i = 0; i < mArray.wans.length; i++ ){
