@@ -2210,7 +2210,7 @@
 				success: function(response){
 					if (response.result != "-1"){
 						wans = eval(Base64.decode(response.result));
-						wans  = wans.sort();
+						if(wans == null) wans=[]; else wans = wans.sort();
 						if(wans.length > 1){
 							wans.unshift(["0","不指定"]);
 						}else if (wans.length == 0){
