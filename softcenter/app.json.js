@@ -132,15 +132,15 @@
             "version": "0.1"
         }, 
         {
-            "build_date": "2019-02-28_15:51:10", 
-            "changelog": "升级BIN", 
+            "build_date": "2019-02-28_17:33:03", 
+            "changelog": "修复wan口", 
             "description": "轻松科学上网~", 
             "home_url": "Module_koolss.asp", 
-            "md5": "99df8c9c3662d98477cd60f475dab71c", 
+            "md5": "05a50c89c822d486890d78de2a383c88", 
             "name": "koolss", 
             "tar_url": "koolss/koolss.tar.gz", 
             "title": "科学上网插件", 
-            "version": "2.1.9"
+            "version": "2.2.0"
         }, 
         {
             "name": "test", 

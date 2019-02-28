@@ -174,6 +174,7 @@
 		var option_acl_port = [['80,443', '80,443'], ['22,80,443', '22,80,443'], ['all', '全部端口'],['0', '自定义']];
 		var option_acl_port_name = ['80,443', '22,80,443', '全部端口', '自定义'];
 		var option_method = [['none', 'none'],['rc4', 'rc4'], ['rc4-md5', 'rc4-md5'], ['rc4-md5-6', 'rc4-md5-6'], ['aes-128-gcm', 'aes-128-gcm'], ['aes-192-gcm', 'aes-192-gcm'], ['aes-256-gcm', 'aes-256-gcm'], ['aes-128-cfb', 'aes-128-cfb'], ['aes-192-cfb', 'aes-192-cfb'], ['aes-256-cfb', 'aes-256-cfb'], ['aes-128-ctr', 'aes-128-ctr'], ['aes-192-ctr', 'aes-192-ctr'], ['aes-256-ctr', 'aes-256-ctr'], ['camellia-128-cfb', 'camellia-128-cfb'], ['camellia-192-cfb', 'camellia-192-cfb'], ['camellia-256-cfb', 'camellia-256-cfb'], ['bf-cfb', 'bf-cfb'], ['cast5-cfb', 'cast5-cfb'], ['idea-cfb', 'idea-cfb'], ['rc2-cfb', 'rc2-cfb'], ['seed-cfb', 'seed-cfb'], ['salsa20', 'salsa20'], ['chacha20', 'chacha20'], ['chacha20-ietf', 'chacha20-ietf'], ['chacha20-ietf-poly1305', 'chacha20-ietf-poly1305'], ['xchacha20-ietf-poly1305', 'xchacha20-ietf-poly1305']];
+		var option_mptcp = [['0', '关闭'],['1', '开启']];
 		var option_ssr_protocal = [['origin','origin'],['verify_simple','verify_simple'],['verify_sha1','verify_sha1'],['auth_sha1','auth_sha1'],['auth_sha1_v2','auth_sha1_v2'],['auth_sha1_v4','auth_sha1_v4'],['auth_aes128_md5','auth_aes128_md5'],['auth_aes128_sha1','auth_aes128_sha1'],['auth_chain_a','auth_chain_a'],['auth_chain_b','auth_chain_b'],['auth_chain_c','auth_chain_c'],['auth_chain_d','auth_chain_d'],['auth_chain_e','auth_chain_e'],['auth_chain_f','auth_chain_f']];
 		var option_ssr_obfs = [['plain','plain'],['http_simple','http_simple'],['http_post','http_post'],['tls1.2_ticket_auth','tls1.2_ticket_auth']];
 		var option_dns_china = [['1', '运营商DNS【自动获取】'],  ['2', '阿里DNS1【223.5.5.5】'],  ['3', '阿里DNS2【223.6.6.6】'],  ['4', '114DNS1【114.114.114.114】'],  ['5', '114DNS1【114.114.115.115】'],  ['6', 'cnnic DNS【1.2.4.8】'],  ['7', 'cnnic DNS【210.2.4.8】'],  ['8', 'oneDNS1【112.124.47.27】'],  ['9', 'oneDNS2【114.215.126.16】'],  ['10', '百度DNS【180.76.76.76】'],  ['11', 'DNSpod DNS【119.29.29.29】'],  ['12', '自定义']];
@@ -3581,6 +3582,7 @@
 						{ title: '服务器端口', name:'ss_basic_port',type:'text',style:input_style,maxlen:5,value:"" },
 						{ title: '密码', name:'ss_basic_password',type:'password',style:input_style,maxlen:64,value:"",help: '如果你的密码内有特殊字符，可能会导致密码参数不能正确的传给ss，导致启动后不能使用ss。',peekaboo: 1  },
 						{ title: '加密方式', name:'ss_basic_method',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb" },
+						{ title: 'MPTCP', name:'ss_basic_mptcp',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0",help: '需要服务器支持。' },
 						{ title: '混淆(AEAD)', name:'ss_basic_ss_obfs',type:'select',style:select_style,options:option_ss_obfs,value: dbus.ss_basic_ss_obfs || "0" },
 						{ title: '混淆主机名', name:'ss_basic_ss_obfs_host',type:'text',style:input_style,value:dbus.ss_basic_ss_obfs_host || "" },
 						{ title: '协议 (protocal)', name:'ss_basic_rss_protocal',type:'select',style:select_style,options:option_ssr_protocal,value: dbus.ss_basic_rss_protocal || "auth_sha1_v4" },
@@ -3609,6 +3611,10 @@
 						{ title: '加密方式', multi: [
 							{ name:'ss_basic_method',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb", suffix: ' &nbsp;&nbsp;' },
 							{ name:'ss_basic_method_1',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb" }
+						]},
+						{ title: 'MPTCP', multi: [
+							{ name:'ss_basic_mptcp',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0", help: '需要服务器支持。', suffix: ' &nbsp;&nbsp;' },
+							{ name:'ss_basic_mptcp_1',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0" }
 						]},
 						{ title: '混淆(AEAD)', multi: [
 							{ name:'ss_basic_ss_obfs',type:'select',style:select_style,options:option_ss_obfs,value: dbus.ss_basic_ss_obfs || "0", suffix: ' &nbsp;&nbsp;' },
