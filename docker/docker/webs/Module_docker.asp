@@ -420,7 +420,6 @@
 						return false;
 					}
 					E("_docker_basic_status").innerHTML = "获取运行状态失败！";
-					E("_docker_basic_status_china").innerHTML = "获取运行状态失败！";
 					setTimeout("get_run_status();", 5000);
 				}
 			});

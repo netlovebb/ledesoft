@@ -77,6 +77,17 @@
             "version": "0.8.7"
         }, 
         {
+            "build_date": "2019-03-01_01:21:54", 
+            "changelog": "", 
+            "description": "端口映射、中转流量", 
+            "home_url": "Module_relay.asp", 
+            "md5": "c8ca3f8d4d0e5d2cfef5481012018108", 
+            "name": "relay", 
+            "tar_url": "relay/relay.tar.gz", 
+            "title": "瑞士军刀", 
+            "version": "0.1"
+        }, 
+        {
             "build_date": "2018-09-23_18:26:03", 
             "changelog": "修复BUG和增加签到站点", 
             "description": "每日批量自动签到", 

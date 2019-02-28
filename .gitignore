@@ -38,4 +38,5 @@ backup.sh
 /koolddns/build
 /docker/build
 /virtual/build
+/relay/build
 /test
