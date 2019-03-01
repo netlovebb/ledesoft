@@ -12,12 +12,11 @@ do
 done
 
 sleep 1
-rm -rf $KSROOT/relay
 rm -rf $KSROOT/scripts/relay_*
 rm -rf $KSROOT/webs/Module_relay.asp
 rm -rf $KSROOT/webs/res/icon-relay.png
 rm -rf $KSROOT/webs/res/icon-relay-bg.png
-rm -rf $KSROOT/bin/relay
+rm -rf $KSROOT/bin/socat
 rm -rf $KSROOT/init.d/S99relay.sh
 rm -rf /etc/rc.d/S99relay.sh
 
