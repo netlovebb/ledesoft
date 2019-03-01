@@ -1,9 +1,9 @@
 {
-"version":"0.6",
-"md5":"ef5447732b54dcf8e84f008a8047bb9e",
+"version":"0.7",
+"md5":"e2b4424fdf323645da1ff410c4b59517",
 "home_url":"Module_routetable.asp",
-"title":"路由表设置",
-"description":"路由流量指明灯",
-"changelog":"修复重装系统后的启动问题",
-"build_date":"2018-08-10_10:46:43"
+"title":"路由表",
+"description":"系统路由表设置",
+"changelog":"优化接口获取",
+"build_date":"2019-03-01_20:42:38"
 }

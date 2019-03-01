@@ -342,33 +342,33 @@
 			table3.setup();
 			get_wans_list();
 		}
+
 		function get_wans_list(){
-			var id = parseInt(Math.random() * 100000000);
-			var postData = {"id": id, "method": "policy_getwans.sh", "params":[], "fields": ""};
+			var id2 = parseInt(Math.random() * 100000000);
+			var postData2 = {"id": id2, "method": "policy_getwan.sh", "params":[], "fields": ""};
 			$.ajax({
 				type: "POST",
 				url: "/_api/",
 				async:true,
 				cache:false,
-				data: JSON.stringify(postData),
+				data: JSON.stringify(postData2),
 				dataType: "json",
 				success: function(response){
 					if (response.result != "-1"){
-						wans = eval(Base64.decode(response.result));
-						for ( var i = 0; i < wans.length; i++ ){
+						wans = response.result.split( '>' );
+						//console.log(s3);
+						for ( var i = 0; i < wans.length; ++i ) {
 							var wans_temp = [];
-							wans_temp[0] = wans[i][0];
-							wans_temp[1] = wans[i][0];
+							wans_temp[0] = wans[i]
+							wans_temp[1] = wans[i]
 							option_wan.push(wans_temp);
 						}
-						option_wan_name  = wans.sort();
-						//console.log(option_wan)
-						//console.log(option_wan_name)
+						option_wan_name = wans.sort();
 						table2.setup();
 						table4.setup();
 					}
 				},
-				timeout:1000
+				timeout:5000
 			});
 		}
 
@@ -537,7 +537,7 @@
 			<li> 只分流WEB对路由下客户端的80、443端口的流量进行分流</li>
 			<li> 负载均衡则不进行分流，对所有流量负载均衡，当流量没有达到最低跃点的宽带的上限时可能不会把流量平均到每个接口</li>
 			<li> 追踪IP可以设置IP地址和网址，设置多个以空格分隔</li>
-	
+			<li> 网络-负载均衡-接口中必须存在一条启用的规则</li>	
 	</div>
 	</div>
 	<!-- ------------------ 表格2--------------------- -->
