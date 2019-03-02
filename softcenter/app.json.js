@@ -181,11 +181,11 @@
             "version": "0.3"
         }, 
         {
-            "build_date": "2019-03-01_20:43:05", 
+            "build_date": "2019-03-02_16:54:49", 
             "changelog": "优化wan口获取", 
             "description": "多运营商自动分流", 
             "home_url": "Module_policy.asp", 
-            "md5": "102e288003798480d6c687166b1db12e", 
+            "md5": "393672877c70292d9fc03cfc1f859968", 
             "name": "policy", 
             "tar_url": "policy/policy.tar.gz", 
             "title": "策略路由", 
@@ -454,11 +454,11 @@
             "version": "1.1.6"
         }, 
         {
-            "build_date": "2019-03-01_20:42:38", 
+            "build_date": "2019-03-02_16:54:35", 
             "changelog": "优化接口获取", 
             "description": "系统路由表设置", 
             "home_url": "Module_routetable.asp", 
-            "md5": "e2b4424fdf323645da1ff410c4b59517", 
+            "md5": "9ba11c2a485883017f0efe0c1073dd36", 
             "name": "routetable", 
             "tar_url": "routetable/routetable.tar.gz", 
             "title": "路由表", 
