@@ -181,15 +181,15 @@
             "version": "0.3"
         }, 
         {
-            "build_date": "2019-03-02_16:54:49", 
-            "changelog": "优化wan口获取", 
+            "build_date": "2019-03-05_13:01:00", 
+            "changelog": "增加客户端分流", 
             "description": "多运营商自动分流", 
             "home_url": "Module_policy.asp", 
-            "md5": "393672877c70292d9fc03cfc1f859968", 
+            "md5": "d745cc09f4a02dd2cc33055ff131a609", 
             "name": "policy", 
             "tar_url": "policy/policy.tar.gz", 
             "title": "策略路由", 
-            "version": "0.6"
+            "version": "0.7"
         }, 
         {
             "build_date": "2018-05-28_12:44:39", 
