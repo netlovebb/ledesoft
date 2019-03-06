@@ -564,9 +564,15 @@
             "version": "0.2"
         }, 
         {
+            "build_date": "2019-03-06_20:49:09", 
+            "changelog": "", 
+            "description": "查看网址和搜索记录", 
+            "home_url": "Module_webrecord.asp", 
+            "md5": "1c46f648ef9e54def31a593b10c8c237", 
             "name": "webrecord", 
             "tar_url": "webrecord/webrecord.tar.gz", 
-            "title": "webrecord"
+            "title": "上网记录", 
+            "version": "0.1"
         }, 
         {
             "build_date": "2017-10-12_15:16:43", 
