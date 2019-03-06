@@ -11,7 +11,7 @@ cp /tmp/mia/uninstall.sh $KSROOT/scripts/uninstall_mia.sh
 
 chmod +x $KSROOT/scripts/mia_*
 
-dbus set softcenter_module_mia_description=时间限制及网址过滤
+dbus set softcenter_module_mia_description=限时网址及协议过滤
 dbus set softcenter_module_mia_install=1
 dbus set softcenter_module_mia_name=mia
 dbus set softcenter_module_mia_title="家长控制"

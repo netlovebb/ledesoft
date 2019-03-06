@@ -3,7 +3,7 @@
 MODULE=mia
 VERSION=0.1
 TITLE="家长控制"
-DESCRIPTION=限制客户端使用时间
+DESCRIPTION=限时网址及协议过滤
 HOME_URL=Module_mia.asp
 CHANGELOG=""
 
