@@ -520,11 +520,11 @@
             "version": "0.8"
         }, 
         {
-            "build_date": "2019-03-06_17:45:09", 
+            "build_date": "2019-03-06_17:54:34", 
             "changelog": "", 
             "description": "限时网址及协议过滤", 
             "home_url": "Module_mia.asp", 
-            "md5": "46b9c8b96ca4032d01fd85c3755a70e8", 
+            "md5": "a90bada3770bc781084784d19d50b0dd", 
             "name": "mia", 
             "tar_url": "mia/mia.tar.gz", 
             "title": "家长控制", 
