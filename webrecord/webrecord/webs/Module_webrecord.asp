@@ -6,6 +6,8 @@
 	<script type="text/javascript">
 		var dbus = {};
 		var softcenter = 0;
+		var _responseLenurl;
+		var _responseLenseach;
 		//============================================
 
 		function init_wol(){
