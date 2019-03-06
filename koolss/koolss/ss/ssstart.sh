@@ -308,25 +308,25 @@ start_kcp(){
 
 ss_arg(){
 	if [ "$ss_basic_ss_obfs_host" != "" ];then
-		if [ "$ss_basic_ss_obfs" == "1" ];then
+		if [ "$ss_basic_ss_obfs" == "obfs-http" ];then
 			ARG_OBFS="--plugin obfs-local --plugin-opts obfs=http;obfs-host=$ss_basic_ss_obfs_host"
-		elif [ "$ss_basic_ss_obfs" == "2" ];then
+		elif [ "$ss_basic_ss_obfs" == "obfs-tls" ];then
 			ARG_OBFS="--plugin obfs-local --plugin-opts obfs=tls;obfs-host=$ss_basic_ss_obfs_host"
-		elif [ "$ss_basic_ss_obfs" == "3" ];then
+		elif [ "$ss_basic_ss_obfs" == "v2ray-http" ];then
 			ARG_OBFS="--plugin v2ray-plugin"
-		elif [ "$ss_basic_ss_obfs" == "4" ];then
-			ARG_OBFS="--plugin v2ray-plugin --plugin-opts \"tls;host=$ss_basic_ss_obfs_host\""
-		elif [ "$ss_basic_ss_obfs" == "5" ];then
-			ARG_OBFS="--plugin v2ray-plugin --plugin-opts \"mode=quic;host=$ss_basic_ss_obfs_host\""
+		elif [ "$ss_basic_ss_obfs" == "v2ray-tls" ];then
+			ARG_OBFS="--plugin v2ray-plugin --plugin-opts tls;host=$ss_basic_ss_obfs_host"
+		elif [ "$ss_basic_ss_obfs" == "v2ray-quic" ];then
+			ARG_OBFS="--plugin v2ray-plugin --plugin-opts mode=quic;host=$ss_basic_ss_obfs_host"
 		else
 			ARG_OBFS=""
 		fi
 	else
-		if [ "$ss_basic_ss_obfs" == "1" ];then
+		if [ "$ss_basic_ss_obfs" == "obfs-http" ];then
 			ARG_OBFS="--plugin obfs-local --plugin-opts obfs=http"
-		elif [ "$ss_basic_ss_obfs" == "2" ];then
+		elif [ "$ss_basic_ss_obfs" == "obfs-tls" ];then
 			ARG_OBFS="--plugin obfs-local --plugin-opts obfs=tls"
-		elif [ "$ss_basic_ss_obfs" == "3" ];then
+		elif [ "$ss_basic_ss_obfs" == "v2ray-http" ];then
 			ARG_OBFS="--plugin v2ray-plugin"
 		else
 			ARG_OBFS=""
@@ -338,8 +338,12 @@ creat_ss_json(){
 	# creat normal ss json
 	echo_date 创建SS配置文件到$CONFIG_FILE
 	if [ "$ss_basic_type" == "0" ];then
-		local mptcp
-		[ "$ss_basic_mptcp" == "0" ] && mptcp="false" || mptcp="true"
+		local mptcpmod
+		if [ "$ss_basic_mptcp" == "0" ]; then
+			mptcpmod="false"
+		else
+			mptcpmod="true"
+		fi
 		cat > $CONFIG_FILE <<-EOF
 			{
 			    "server":"$ss_basic_server",
@@ -348,7 +352,7 @@ creat_ss_json(){
 			    "local_address": "0.0.0.0",
 			    "password":"$ss_basic_password",
 			    "timeout":600,
-			    "mptcp": $mptcp,
+			    "mptcp": $mptcpmod,
 			    "method":"$ss_basic_method"
 			}
 		EOF
@@ -566,7 +570,7 @@ start_sslocal(){
 		if [ "$ss_basic_ss_obfs" == "0" ];then
 			ss-local $SPECIAL_ARG -l 23456 -c $CONFIG_FILE -u -f /var/run/sslocal1.pid >/dev/null 2>&1
 		else
-			ss-local $SPECIAL_ARG -l 23456 -c $CONFIG_FILE -u "$ARG_OBFS" -f /var/run/sslocal1.pid >/dev/null 2>&1
+			ss-local $SPECIAL_ARG -l 23456 -c $CONFIG_FILE -u $ARG_OBFS -f /var/run/sslocal1.pid >/dev/null 2>&1
 		fi
 	fi
 }
@@ -594,7 +598,7 @@ start_dns(){
 			if [ "$ss_basic_ss_obfs" == "0" ];then
 				ss-tunnel -s $ss_basic_server -p $ss_basic_port -c $CONFIG_FILE -l $DNS_PORT -L "$ss_sstunnel_user" -u -f /var/run/sstunnel.pid >/dev/null 2>&1
 			else
-				ss-tunnel -s $ss_basic_server -p $ss_basic_port -c $CONFIG_FILE -l $DNS_PORT -L "$ss_sstunnel_user" -u "$ARG_OBFS" -f /var/run/sstunnel.pid >/dev/null 2>&1
+				ss-tunnel -s $ss_basic_server -p $ss_basic_port -c $CONFIG_FILE -l $DNS_PORT -L "$ss_sstunnel_user" -u $ARG_OBFS -f /var/run/sstunnel.pid >/dev/null 2>&1
 			fi
 		fi
 	fi
@@ -977,7 +981,7 @@ start_ss_redir(){
 			if [ "$ss_basic_ss_obfs" == "0" ];then
 				ss-redir $SPECIAL_ARG -c $CONFIG_FILE -f /var/run/koolss.pid >/dev/null 2>&1
 			else
-				ss-redir $SPECIAL_ARG -c $CONFIG_FILE "$ARG_OBFS" -f /var/run/koolss.pid >/dev/null 2>&1
+				ss-redir $SPECIAL_ARG -c $CONFIG_FILE $ARG_OBFS -f /var/run/koolss.pid >/dev/null 2>&1
 			fi
 		fi
 		# ONLY UDP
@@ -989,7 +993,7 @@ start_ss_redir(){
 			if [ "$ss_basic_ss_obfs" == "0" ];then
 				ss-redir -c $CONFIG_FILE -U -f /var/run/koolss.pid >/dev/null 2>&1
 			else
-				ss-redir -c $CONFIG_FILE -U "$ARG_OBFS" -f /var/run/koolss.pid >/dev/null 2>&1
+				ss-redir -c $CONFIG_FILE -U $ARG_OBFS -f /var/run/koolss.pid >/dev/null 2>&1
 			fi
 		fi
 	else
@@ -1002,7 +1006,7 @@ start_ss_redir(){
 			if [ "$ss_basic_ss_obfs" == "0" ];then
 				ss-redir $SPECIAL_ARG -c $CONFIG_FILE -u -f /var/run/koolss.pid >/dev/null 2>&1
 			else
-				ss-redir $SPECIAL_ARG -c $CONFIG_FILE -u "$ARG_OBFS" -f /var/run/koolss.pid >/dev/null 2>&1
+				ss-redir $SPECIAL_ARG -c $CONFIG_FILE -u $ARG_OBFS -f /var/run/koolss.pid >/dev/null 2>&1
 			fi
 		fi
 	fi

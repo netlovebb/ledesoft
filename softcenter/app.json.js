@@ -143,15 +143,15 @@
             "version": "0.1"
         }, 
         {
-            "build_date": "2019-02-28_17:33:03", 
-            "changelog": "修复wan口", 
+            "build_date": "2019-03-07_00:32:21", 
+            "changelog": "修复obfs", 
             "description": "轻松科学上网~", 
             "home_url": "Module_koolss.asp", 
-            "md5": "05a50c89c822d486890d78de2a383c88", 
+            "md5": "e2871cabb7971cccd7a997be8efe3766", 
             "name": "koolss", 
             "tar_url": "koolss/koolss.tar.gz", 
             "title": "科学上网插件", 
-            "version": "2.2.0"
+            "version": "2.2.1"
         }, 
         {
             "name": "test", 
