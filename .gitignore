@@ -39,4 +39,7 @@ backup.sh
 /docker/build
 /virtual/build
 /relay/build
+/mia/build
+/timewol/build
+/webrecord
 /test

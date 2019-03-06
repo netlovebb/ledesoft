@@ -377,6 +377,17 @@
             "version": "0.2.4"
         }, 
         {
+            "build_date": "2019-03-06_17:29:06", 
+            "changelog": "", 
+            "description": "在指定时间唤醒设备", 
+            "home_url": "Module_timewol.asp", 
+            "md5": "931ef3de97eb255cf0fed4b1f4bce4cc", 
+            "name": "timewol", 
+            "tar_url": "timewol/timewol.tar.gz", 
+            "title": "定时唤醒", 
+            "version": "0.1"
+        }, 
+        {
             "build_date": "2018-09-29_17:10:04", 
             "changelog": "", 
             "description": "NAT类型-Full cone", 
@@ -509,6 +520,17 @@
             "version": "0.8"
         }, 
         {
+            "build_date": "2019-03-06_17:27:11", 
+            "changelog": "", 
+            "description": "限制客户端使用时间", 
+            "home_url": "Module_mia.asp", 
+            "md5": "6f2556305f66c79988ee0fe6b7e46d41", 
+            "name": "mia", 
+            "tar_url": "mia/mia.tar.gz", 
+            "title": "家长控制", 
+            "version": "0.1"
+        }, 
+        {
             "build_date": "2017-11-24_18:16:42", 
             "changelog": "", 
             "description": "PPPOE服务器", 
@@ -540,6 +562,11 @@
             "tar_url": "baidupcs/baidupcs.tar.gz", 
             "title": "百度网盘", 
             "version": "0.2"
+        }, 
+        {
+            "name": "webrecord", 
+            "tar_url": "webrecord/webrecord.tar.gz", 
+            "title": "webrecord"
         }, 
         {
             "build_date": "2017-10-12_15:16:43", 
