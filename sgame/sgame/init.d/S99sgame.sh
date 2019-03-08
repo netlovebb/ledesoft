@@ -15,7 +15,7 @@ source /koolshare/scripts/base.sh
 eval `dbus export sgame`
 
 start(){
-	[ "$sgame_enable" == "1" ] && /koolshare/scripts/sgame_config.sh
+	[ "$sgame_basic_enable" == "1" ] && /koolshare/scripts/sgame_config.sh
 }
 
 stop(){

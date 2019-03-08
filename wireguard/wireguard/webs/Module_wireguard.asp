@@ -10,6 +10,7 @@
 </style>
 	<script type="text/javascript">
 		var dbus;
+		get_arp_list();
 		get_conf_list();
 		get_wan_list();
 		get_dbus_data();
@@ -17,12 +18,13 @@
 		var noChange = 0;
 		var x = 4;
 		var status_time = 1;
-		var option_acl_mode = [['0', '不代理'], ['1', '大陆白名单'], ['2', '全局模式']];
-		var option_dns_china = [['1', '运营商DNS【自动获取】'],  ['2', '阿里DNS1【223.5.5.5】'],  ['3', '阿里DNS2【223.6.6.6】'],  ['4', '114DNS1【114.114.114.114】'],  
-								['5', '114DNS1【114.114.115.115】'],  ['6', 'cnnic DNS【1.2.4.8】'],  ['7', 'cnnic DNS【210.2.4.8】'],  ['8', 'oneDNS1【112.124.47.27】'],  
-								['9', 'oneDNS2【114.215.126.16】'],  ['10', '百度DNS【180.76.76.76】'],  ['11', 'DNSpod DNS【119.29.29.29】'],  ['12', '自定义']];
-		var option_wireguard_dns_foreign = [['2', 'google dns\[8.8.8.8\]'], ['3', 'google dns\[8.8.4.4\]'], ['1', 'OpenDNS\[208.67.220.220\]'], ['4', '自定义']];
-		var option_dns_foreign = [['1', 'wireguard_dns']];
+		var option_acl_mode = [['0', '不代理'], ['1', 'gfwlist黑名单'], ['2', '大陆白名单'], ['3', '全局模式']];
+		var option_acl_mode_name = ['不代理', 'gfwlist黑名单', '大陆白名单', '全局模式'];
+		var option_acl_port = [['80,443', '80,443'], ['22,80,443', '22,80,443'], ['all', '全部端口'],['0', '自定义']];
+		var option_acl_port_name = ['80,443', '22,80,443', '全部端口', '自定义'];
+		var option_arp_list = [];
+		var option_arp_local = [];
+		var option_arp_web = [];
 		var option_conf_local = [];
 		var option_file = [];
 		var softcenter = 0;
@@ -231,6 +233,167 @@
 			return form;
 		}
 		//============================================
+		var wireguard_acl = new TomatoGrid();
+		wireguard_acl.dataToView = function( data ) {
+			var option_acl_port = [['80,443', '80,443'], ['22,80,443', '22,80,443'], ['all', 'all'], ['0', '自定义']];
+			var option_acl_port_value = ['80,443', '22,80,443', 'all', '0'];
+			var option_acl_port_name = ['80,443', '22,80,443', '全部端口', '自定义'];
+			var a = option_acl_port_value.indexOf(data[4]);
+			var b = option_acl_port_name[a]
+			if (data[4] == 0){
+				b = data[5]
+			}
+		
+			if (data[0]){
+				return [ "【" + data[0] + "】", data[1], data[2], option_acl_mode_name[data[3]], b, data[5] ];
+			}else{
+				if (data[1]){
+					return [ "【" + data[1] + "】", data[1], data[2], option_acl_mode_name[data[3]], b, data[5] ];
+				}else{
+					if (data[2]){
+						return [ "【" + data[2] + "】", data[1], data[2], option_acl_mode_name[data[3]], b, data[5] ];
+					}
+				}
+			}
+		}
+		wireguard_acl.fieldValuesToData = function( row ) {
+			var f = fields.getAll( row );
+			if (f[0].value){
+				return [ f[0].value, f[1].value, f[2].value, f[3].value, f[4].value, f[5].value ];
+			}else{
+				if (f[1].value){
+					return [ f[1].value, f[1].value, f[2].value, f[3].value, f[4].value, f[5].value ];
+				}else{
+					if (f[2].value){
+						return [ f[2].value, f[1].value, f[2].value, f[3].value, f[4].value, f[5].value ];
+					}
+				}
+			}
+		}
+		wireguard_acl.dataToFieldValues = function (data) {
+			return [data[0], data[1], data[2], data[3], data[4], data[5]];
+		}
+    	wireguard_acl.onChange = function(which, cell) {
+    	    return this.verifyFields((which == 'new') ? this.newEditor: this.editor, true, cell);
+    	}
+		wireguard_acl.verifyFields = function( row, quiet,cell ) {
+			var f = fields.getAll( row );
+			// fill the ip and mac when chose the name
+			if ( $(cell).attr("id") == "_[object HTMLTableElement]_1" ) {
+				if (f[0].value){
+					f[1].value = option_arp_list[f[0].selectedIndex][2];
+					f[2].value = option_arp_list[f[0].selectedIndex][3];
+				}
+			}
+
+			// user port
+			if (f[4].selectedIndex == 3){
+				$("#wireguard_acl_pannel > tbody > tr > td:nth-child(6)").show();
+				$("#_wireguard_acl_pannel_6").show();
+			}else{
+				$("#wireguard_acl_pannel > tbody > tr > td:nth-child(6)").hide();
+				$("#_wireguard_acl_pannel_6").hide();
+			}
+			//check if ip and mac column correct
+			if (f[1].value && !f[2].value){
+				return v_ip( f[1], quiet );
+			}
+			if (!f[1].value && f[2].value){
+				return v_mac( f[2], quiet );
+			}
+			if (f[1].value && f[2].value){
+				return v_ip( f[1], quiet ) || v_mac( f[2], quiet );
+			}
+		}
+		wireguard_acl.alter_txt = function() {
+			if (this.tb.rows.length == "6"){
+				$('#footer_ip').html("<i>全部主机 - ip</i>")
+				$('#footer_mac').html("<i>全部主机 - mac</i>")
+			}else{
+				$('#footer_ip').html("<i>其它主机 - ip</i>")
+				$('#footer_mac').html("<i>其它主机 - mac</i>")
+			}
+		}
+		wireguard_acl.onAdd = function() {
+			var data;
+			this.moving = null;
+			this.rpHide();
+			if (!this.verifyFields(this.newEditor, false)) return;
+			data = this.fieldValuesToData(this.newEditor);
+			this.insertData(1, data);
+			this.disableNewEditor(false);
+			this.resetNewEditor();
+			this.alter_txt(); // added by sadog
+		}
+		wireguard_acl.rpDel = function(b) {
+			b = PR(b);
+			TGO(b).moving = null;
+			b.parentNode.removeChild(b);
+			this.recolor();
+			this.rpHide()
+			this.alter_txt(); // added by sadog
+		}
+		wireguard_acl.resetNewEditor = function() {
+			var f;
+			f = fields.getAll( this.newEditor );
+			ferror.clearAll( f );
+			f[ 0 ].value = '';
+			f[ 1 ].value   = '';
+			f[ 2 ].value   = '';
+			f[ 3 ].value   = '1';
+			f[ 4 ].value   = '80,443';
+			f[ 5 ].value   = '';
+		}
+		wireguard_acl.footerSet = function(c, b) {
+			var f, d;
+			elem.remove(this.footer);
+			this.footer = f = this._insert(-1, c, b);
+			//f.className = "alert alert-info";
+			for (d = 0; d < f.cells.length; ++d) {
+				f.cells[d].cellN = d;
+				f.cells[d].onclick = function() {
+					TGO(this).footerClick(this)
+				}
+			}
+			return f
+		}
+		wireguard_acl.setup = function() {
+			this.init( 'wireguard_acl_pannel', '', 254, [
+			{ type: 'select',maxlen:20,options:option_arp_list},	//name
+			{ type: 'text',maxlen:20},	//name
+			{ type: 'text',maxlen:20},	//name
+			{ type: 'select',maxlen:20,options:option_acl_mode},	//control
+			{ type: 'select',maxlen:20,options:option_acl_port},
+			{ type: 'text',maxlen:20}
+			] );
+			this.headerSet( [ '主机别名', '主机IP地址', 'MAC地址', '访问控制', '目标端口', '自定义端口'] );
+			if (typeof(dbus["wireguard_acl_node_max"]) == "undefined"){
+				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>全部主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>全部主机 - mac</small></i>','<select id="_wireguard_acl_default_mode1" name="wireguard_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>全部主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
+			}else{
+				this.footerSet( [ '<small id="footer_name" style="color:#1bbf35"><i>缺省规则</i></small>','<small id="footer_ip" style="color:#1bbf35"><i>其它主机 - ip</i></small>','<small id="footer_mac" style="color:#1bbf35"><i>其它主机 - mac</small></i>','<select id="_wireguard_acl_default_mode1" name="wireguard_acl_default_mode1" style="border: 0px solid #222;background: transparent;margin-left:-4px;padding:-0 -0;height:16px;" onchange="verifyFields(this, 1)"><option value="0">不代理</option><option value="1">gfwlist黑名单</option><option value="2">大陆白名单</option><option value="3">全局模式</option></select>','<small id="footer_port" style="color:#1bbf35"><i>其它主机 - 全部端口</i></small>','<small id="footer_port_user" style="color:#1bbf35"></small>']);
+			}
+			
+			if(typeof(dbus["wireguard_acl_default_mode"]) != "undefined" ){
+				E("_wireguard_acl_default_mode1").value = dbus["wireguard_acl_default_mode"];
+			}else{
+				E("_wireguard_acl_default_mode1").value = 1;
+			}
+			
+			for ( var i = 1; i <= dbus["wireguard_acl_node_max"]; i++){
+				var t = [dbus["wireguard_acl_name_" + i ], 
+						dbus["wireguard_acl_ip_" + i ]  || "",
+						dbus["wireguard_acl_mac_" + i ]  || "",
+						dbus["wireguard_acl_mode_" + i ],
+						dbus["wireguard_acl_port_" + i ],
+						dbus["wireguard_acl_port_user_" + i ]||""
+						]
+				if ( t.length == 6 ) this.insertData( -1, t );
+			}
+			this.recolor();
+			this.showNewEditor();
+			this.resetNewEditor();
+		}
+		//============================================
 		function init_wireguard(){
 			tabSelect('app1');
 			verifyFields();
@@ -242,6 +405,47 @@
 			set_version();
 			//version_show();
 			setTimeout("get_run_status();", 2000);
+		}
+
+		function get_arp_list(){
+			var id5 = parseInt(Math.random() * 100000000);
+			var postData1 = {"id": id5, "method": "wireguard_getarp.sh", "params":[], "fields": ""};
+			$.ajax({
+				type: "POST",
+				url: "/_api/",
+				async:true,
+				cache:false,
+				data: JSON.stringify(postData1),
+				dataType: "json",
+				success: function(response){
+					if (response.result != "-1"){
+						var s2 = response.result.split( '>' );
+						for ( var i = 0; i < s2.length; ++i ) {
+							option_arp_local[i] = [s2[ i ].split( '<' )[0], "【" + s2[ i ].split( '<' )[0] + "】", s2[ i ].split( '<' )[1]];
+						}
+						var node_acl = parseInt(dbus["wireguard_acl_node_max"]) || 0;
+						for ( var i = 0; i < node_acl; ++i ) {
+							option_arp_web[i] = [dbus["wireguard_acl_name_" + (i + 1)], "【" + dbus["wireguard_acl_name_" + (i + 1)] + "】", dbus["wireguard_acl_ip_" + (i + 1)]];
+						}			
+						option_arp_list = unique_array(option_arp_local.concat( option_arp_web ));
+						wireguard_acl.setup();
+					}
+				},
+				error:function(){
+					wireguard_acl.setup();
+				},
+				timeout:1000
+			});
+		}
+
+		function unique_array(array){
+			var r = [];
+			for(var i = 0, l = array.length; i < l; i++) {
+				for(var j = i + 1; j < l; j++)
+				if (array[i][0] === array[j][0]) j = ++i;
+					r.push(array[i]);
+			}
+			return r.sort();;
 		}
 
 		function set_version(){
@@ -324,6 +528,7 @@
 							$("#_wireguard_basic_conf").append("<option value='" + s3[i] + "'>" + s3[i] + "</option>");
 						}
 					}
+					conf2obj_conf();
 				},
 				timeout:1000
 			});
@@ -344,19 +549,20 @@
 						var s2 = response.result.split( '>' );
 						//console.log(s3);
 						for ( var i = 0; i < s2.length; ++i ) {							
-							$("#_wireguard_basic_wan").append("<option value='" + s2[i] + "'>" + s2[i] + "</option>");
 							$("#_wireguard_basic_vpn").append("<option value='" + s2[i] + "'>" + s2[i] + "</option>");
 						}
-						conf2obj();
+						conf2obj_vpn();
 					}
 				},
 				timeout:1000
 			});
 		}
 
-		function conf2obj(){
-			E("_wireguard_basic_wan").value = dbus["wireguard_basic_wan"];
+		function conf2obj_vpn(){
 			E("_wireguard_basic_vpn").value = dbus["wireguard_basic_vpn"];
+		}
+
+		function conf2obj_conf(){
 			E("_wireguard_basic_conf").value = dbus["wireguard_basic_conf"];
 		}
 
@@ -378,11 +584,6 @@
 		}
 
 		function verifyFields(r){
-			if (E("_wireguard_dns_plan").value == "1"){
-				$('#_wireguard_dns_plan_txt').html("国外dns解析gfwlist名单内的国外域名，剩下的域名用国内dns解析。 ")
-			}else if (E("_wireguard_dns_plan").value == "2"){
-				$('#_wireguard_dns_plan_txt').html("国内dns解析cdn名单内的国内域名用，剩下的域名用国外dns解析。<font color='#FF3300'>推荐！</font> ")
-			}
 			// when check/uncheck wireguard_switch
 			var a  = E('_wireguard_basic_enable').checked;
 			if ( $(r).attr("id") == "_wireguard_basic_enable" ) {
@@ -394,29 +595,17 @@
 					tabSelect('fuckapp')
 				}
 			}
-			// dns			
-			var b  = E('_wireguard_dns_china').value == '12';
-			elem.display('_wireguard_dns_china_user', b);
-			
-			var c  = E('_wireguard_dns_foreign').value == '4';
-			elem.display('_wireguard_dns_foreign_user', c);
-			
+			// change main mode adn acl mode
+			if ( $(r).attr("id") == "_wireguard_acl_default_mode" ) {
+				E("_wireguard_acl_default_mode1").value = E("_wireguard_acl_default_mode").value;
+			}
+			if ( $(r).attr("id") == "_wireguard_acl_default_mode1" ) {
+				E("_wireguard_acl_default_mode").value = E("_wireguard_acl_default_mode1").value;
+			}
 			//config
 			var d  = E('_wireguard_basic_conf').value == '0';
 			elem.display(PR('_wireguard_custom_config'), d);
-			
-			//wan
-			var f  = E('_wireguard_basic_mode').value == '1';
-			elem.display(PR('_wireguard_basic_wan'), f);
-			
-			//rule
-			var l1  = E('_wireguard_basic_rule_update').value == '1';
-			elem.display('_wireguard_basic_rule_update_day', l1);
-			elem.display('_wireguard_basic_rule_update_hr', l1);
-			elem.display(elem.parentElem('_wireguard_basic_chnroute_update', 'DIV'), l1);
-			elem.display('_wireguard_basic_chnroute_update_txt', l1);
-			elem.display(elem.parentElem('_wireguard_basic_cdn_update', 'DIV'), l1);
-			elem.display('_wireguard_basic_cdn_update_txt', l1);
+
 			return true;
 		}
 		function tabSelect(obj){
@@ -436,8 +625,6 @@
 				elem.display('save-button', false);
 				noChange=0;
 				setTimeout("get_log();", 200);
-			}else if(obj=='app7'){
-				elem.display('save-button', false);
 			}else{
 				elem.display('save-button', true);
 				noChange=2001;
@@ -446,24 +633,27 @@
 				elem.display('wireguard_status_pannel', false);
 				elem.display('wireguard_tabs', false);
 				elem.display('wireguard_basic_tab', false);
-				elem.display('wireguard_dns_tab', false);
+				elem.display('wireguard_wblist_tab', false);
+				elem.display('wireguard_acl_tab', false);
+				elem.display('wireguard_addon_tab', false);
 				elem.display('wireguard_log_tab', false);
 				E('save-button').style.display = "";
 			}
 		}
+
 		function showMsg(Outtype, title, msg){
 			$('#'+Outtype).html('<h5>'+title+'</h5>'+msg+'<a class="close"><i class="icon-cancel"></i></a>');
 			$('#'+Outtype).show();
 		}
 
 		function save(){
-			setTimeout("tabSelect('app6')", 500);
 			status_time = 999999990;
-			get_run_status();
+			setTimeout("tabSelect('app6')", 500);
+			//get_run_status();
 			E("_wireguard_basic_status_foreign").innerHTML = "国外链接 - 提交中...暂停获取状态！";
 			E("_wireguard_basic_status_china").innerHTML = "国内链接 - 提交中...暂停获取状态！";
-			var paras_chk = ["enable", "dns_chromecast", "chnroute_update", "cdn_update" , "keepalive"];
-			var paras_inp = ["wireguard_basic_mode", "wireguard_dns_plan", "wireguard_dns_china", "wireguard_dns_china_user", "wireguard_dns_foreign_select", "wireguard_dns_foreign", "wireguard_dns_foreign_user", "wireguard_basic_rule_update", "wireguard_basic_rule_update_day", "wireguard_basic_rule_update_hr" , "wireguard_basic_conf" , "wireguard_basic_wan", "wireguard_basic_vpn"];
+			var paras_chk = ["enable", "keepalive"];
+			var paras_inp = ["wireguard_acl_default_mode", "wireguard_basic_conf", "wireguard_basic_vpn"];
 			// collect data from checkbox
 			for (var i = 0; i < paras_chk.length; i++) {
 				dbus["wireguard_basic_" + paras_chk[i]] = E('_wireguard_basic_' + paras_chk[i] ).checked ? '1':'0';
@@ -477,7 +667,7 @@
 				}
 			}
 			// data need base64 encode
-			var paras_base64 = ["wireguard_dnsmasq"];
+			var paras_base64 = ["wireguard_wan_white_ip", "wireguard_wan_white_domain", "wireguard_wan_black_ip", "wireguard_wan_black_domain"];
 			for (var i = 0; i < paras_base64.length; i++) {
 				if (typeof(E('_' + paras_base64[i] ).value) == "undefined"){
 					dbus[paras_base64[i]] = "";
@@ -486,6 +676,26 @@
 				}
 			}
 			dbus["wireguard_custom_config"] = Base64.encode(E('_wireguard_custom_config').value);
+			// collect acl data from acl pannel
+			var wireguard_acl_conf = ["wireguard_acl_name_", "wireguard_acl_ip_", "wireguard_acl_mac_", "wireguard_acl_mode_", "wireguard_acl_port_", "wireguard_acl_port_user_" ];
+			// mark all acl data for delete first
+			for ( var i = 1; i <= dbus["wireguard_acl_node_max"]; i++){
+				for ( var j = 0; j < wireguard_acl_conf.length; ++j ) {
+					dbus[wireguard_acl_conf[j] + i ] = ""
+				}
+			}
+			var data2 = wireguard_acl.getAllData();
+			if(data2.length > 0){
+				for ( var i = 0; i < data2.length; ++i ) {
+					for ( var j = 1; j < wireguard_acl_conf.length; ++j ) {
+						dbus[wireguard_acl_conf[0] + (i + 1)] = data2[i][0];
+						dbus[wireguard_acl_conf[j] + (i + 1)] = data2[i][j];
+					}
+				}
+				dbus["wireguard_acl_node_max"] = data2.length;
+			}else{
+				dbus["wireguard_acl_node_max"] = "";
+			}
 			
 			// now post data
 			var id = parseInt(Math.random() * 100000000);
@@ -572,27 +782,11 @@
 		}
 		function manipulate_conf(script, arg){
 			var dbus3 = {};
-			if(arg == 2 || arg == 4){
+			if(arg == 2 || arg == 3){
 				tabSelect("app6");
 			}else if(arg == 6){
 				status_time = 999999990;
 				get_run_status();
-				tabSelect("app6");
-			}else if(arg == 7){
-				var paras_chk = ["gfwlist_update", "chnroute_update", "cdn_update"];
-				var paras_inp = ["wireguard_basic_rule_update", "wireguard_basic_rule_update_day", "wireguard_basic_rule_update_hr" ];
-				// collect data from checkbox
-				for (var i = 0; i < paras_chk.length; i++) {
-					dbus3["wireguard_basic_" + paras_chk[i]] = E('_wireguard_basic_' + paras_chk[i] ).checked ? '1':'0';
-				}
-				// data from other element
-				for (var i = 0; i < paras_inp.length; i++) {
-					if (typeof(E('_' + paras_inp[i] ).value) == "undefined"){
-						dbus3[paras_inp[i]] = "";
-					}else{
-						dbus3[paras_inp[i]] = E('_' + paras_inp[i]).value;
-					}
-				}
 				tabSelect("app6");
 			}
 			var id = parseInt(Math.random() * 100000000);
@@ -772,8 +966,8 @@
 	</div>
 	<ul id="wireguard_tabs" class="nav nav-tabs">
 		<li><a href="javascript:void(0);" onclick="tabSelect('app1');" id="app1-tab" class="active"><i class="icon-system"></i> 帐号设置</a></li>
-		<li><a href="javascript:void(0);" onclick="tabSelect('app2');" id="app2-tab"><i class="icon-tools"></i> DNS设定</a></li>
-		<li><a href="javascript:void(0);" onclick="tabSelect('app7');" id="app7-tab"><i class="icon-cmd"></i> 规则管理</a></li>
+		<li><a href="javascript:void(0);" onclick="tabSelect('app2');" id="app2-tab"><i class="icon-warning"></i> 黑白名单</a></li>
+		<li><a href="javascript:void(0);" onclick="tabSelect('app3');" id="app3-tab"><i class="icon-tools"></i> 访问控制</a></li>
 		<li><a href="javascript:void(0);" onclick="tabSelect('app5');" id="app5-tab"><i class="icon-wake"></i> 附加设置</a></li>
 		<li><a href="javascript:void(0);" onclick="tabSelect('app6');" id="app6-tab"><i class="icon-hourglass"></i> 查看日志</a></li>	
 	</ul>
@@ -783,8 +977,7 @@
 			<div id="wireguard_basic_pannel" class="section"></div>
 			<script type="text/javascript">
 				$('#wireguard_basic_pannel').forms([
-					{ title: '代理模式', name:'wireguard_basic_mode',type:'select', options:option_acl_mode, value:dbus.wireguard_basic_mode },
-					{ title: '国内出口', name:'wireguard_basic_wan',type:'select', options:[], value:dbus.wireguard_basic_wan },
+					{ title: '代理模式', name:'wireguard_acl_default_mode',type:'select', options:option_acl_mode, value:dbus.wireguard_acl_default_mode },
 					{ title: 'VPN出口', name:'wireguard_basic_vpn',type:'select', options:[], value:dbus.wireguard_basic_vpn },
 					{ title: '配置文件上传', suffix: '<input type="file" id="file2" size="50">&nbsp;&nbsp;<button id="uploadconfig" type="button"  onclick="upload_conf();" class="btn btn-success">上传 </button>' },
 					{ title: '配置文件选择', multi: [ 
@@ -797,54 +990,38 @@
 			</script>
 		</div>
 	</div>
-	<div class="box boxr2" id="wireguard_dns_tab" style="margin-top: 0px;">
+	<!-- ------------------ 黑白名单 --------------------- -->
+	<div class="box boxr2" id="wireguard_wblist_tab" style="margin-top: 0px;">
 		<div class="heading"></div>
 		<div class="content" style="margin-top: -20px;">
-			<div id="wireguard_dns_pannel" class="section"></div>
+			<div id="wireguard_wblist_pannel" class="section"></div>
 			<script type="text/javascript">
-				$('#wireguard_dns_pannel').forms([
-					{ title: 'DNS解析偏好', name:'wireguard_dns_plan',type:'select',options:[['1', '国内优先'], ['2', '国外优先']], value: dbus.wireguard_dns_plan || "2", suffix: '<lable id="_wireguard_dns_plan_txt"></lable>'},
-					{ title: 'chromecast支持 (接管局域网DNS解析)',  name:'wireguard_basic_dns_chromecast',type:'checkbox', value: dbus.wireguard_basic_dns_chromecast != 0, suffix: '<lable>此处强烈建议开启！</lable>' },
-					{ title: '选择国内DNS', multi: [
-						{ name: 'wireguard_dns_china',type:'select', options:option_dns_china, value: dbus.wireguard_dns_china || "1", suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_dns_china_user', type: 'text', value: dbus.wireguard_dns_china_user }
-					]},
-					// dns foreign pcap
-					{ title: '选择国外DNS', multi: [
-						{ name: 'wireguard_dns_foreign_select',type: 'select', options:option_dns_foreign, value: dbus.wireguard_dns_dns_foreign || "1", suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_dns_foreign',type: 'select', options:option_wireguard_dns_foreign, value: dbus.wireguard_dns_foreign || "2", suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_dns_foreign_user', type: 'text', value: dbus.wireguard_dns_foreign_user || "8.8.8.8:53" },
-						{ suffix: '<lable>默认使用 wireguard 内置的DNS功能解析国外域名。</lable>' }
-					]},
-					{ title: '<b>自定义dnsmasq</b></br></br><font color="#B2B2B2">一行一个，错误的格式会导致dnsmasq不能启动，格式：</br>address=/koolshare.cn/2.2.2.2</br>bogus-nxdomain=220.250.64.18</br>conf-file=/koolshare/mydnsmasq.conf</font>', name: 'wireguard_dnsmasq', type: 'textarea', value: Base64.decode(dbus.wireguard_dnsmasq)||"", style: 'width: 100%; height:150px;' }
+				$('#wireguard_wblist_pannel').forms([
+					{ title: '<b>IP/CIDR白名单</b></br></br><font color="#B2B2B2">不需要加速的外网ip/cidr地址，一行一个，例如：</br>2.2.2.2</br>3.3.0.0/16</font>', name: 'wireguard_wan_white_ip', type: 'textarea', value: Base64.decode(dbus.wireguard_wan_white_ip)||"", style: 'width: 100%; height:150px;' },
+					{ title: '<b>域名白名单</b></br></br><font color="#B2B2B2">不需要加速的域名，例如：</br>google.com</br>facebook.com</font>', name: 'wireguard_wan_white_domain', type: 'textarea', value: Base64.decode(dbus.wireguard_wan_white_domain)||"", style: 'width: 100%; height:150px;' },
+					{ title: '<b>IP/CIDR黑名单</b></br></br><font color="#B2B2B2">需要加速的外网ip/cidr地址，一行一个，例如：</br>4.4.4.4</br>5.0.0.0/8</font>', name: 'wireguard_wan_black_ip', type: 'textarea', value: Base64.decode(dbus.wireguard_wan_black_ip)||"", style: 'width: 100%; height:150px;' },
+					{ title: '<b>域名黑名单</b></br></br><font color="#B2B2B2">需要加速的域名,例如：</br>baidu.com</br>koolshare.cn</font>', name: 'wireguard_wan_black_domain', type: 'textarea', value: Base64.decode(dbus.wireguard_wan_black_domain)||"", style: 'width: 100%; height:150px;' }
 				]);
 			</script>
 		</div>
-	</div>
-	<!-- ------------------ 规则管理 --------------------- -->
-	<div class="box boxr7" id="ss_rule_tab" style="margin-top: 0px;">
-		<div class="heading"></div>
-		<div class="content" style="margin-top: -20px;">
-			<div id="ss_rule_pannel" class="section"></div>
-			<script type="text/javascript">
-				$('#ss_rule_pannel').forms([
-					{ title: '大陆白名单IP段数量', rid:'chn_number_1', text:'<a id="chn_number" href="https://raw.githubusercontent.com/hq450/fancyss/master/rules/chnroute.txt" target="_blank"></a>'},
-					{ title: '国内域名数量（cdn名单）', rid:'cdn_number_1', text:'<a id="cdn_number" href="https://raw.githubusercontent.com/hq450/fancyss/master/rules/cdn.txt" target="_blank"></a>'},
-					{ title: '规则自动更新', multi: [
-						{ name: 'wireguard_basic_rule_update',type: 'select', options:[['0', '禁用'], ['1', '开启']], value: dbus.wireguard_basic_rule_update || "1", suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_basic_rule_update_day', type: 'select', options:option_day_time, value: dbus.wireguard_basic_rule_update_day || "7",suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_basic_rule_update_hr', type: 'select', options:option_hour_time, value: dbus.wireguard_basic_rule_update_hr || "3",suffix: ' &nbsp;&nbsp;' },
-						{ name: 'wireguard_basic_chnroute_update',type:'checkbox',value: dbus.wireguard_basic_chnroute_update != 0, suffix: '<lable id="_wireguard_basic_chnroute_update_txt">chnroute</lable>&nbsp;&nbsp;' },
-						{ name: 'wireguard_basic_cdn_update',type:'checkbox',value: dbus.wireguard_basic_cdn_update != 0, suffix: '<lable id="_wireguard_basic_cdn_update_txt">cdn_list</lable>&nbsp;&nbsp;' },
-						{ suffix: '<button id="_update_rules_now" onclick="manipulate_conf(\'wireguard_config.sh\', 6);" class="btn btn-success">手动更新 <i class="icon-cloud"></i></button>' }
-					]}
-				]);
-				$('#chn_number').html(dbus.wireguard_basic_chn_status || "未初始化");
-				$('#cdn_number').html(dbus.wireguard_basic_cdn_status || "未初始化");
-			</script>
+	</div>	
+	<!-- ------------------ 访问控制 --------------------- -->
+	<div class="box boxr3" id="wireguard_acl_tab" style="margin-top: 0px;">
+		<div class="content">
+			<div class="tabContent">
+				<table class="line-table" cellspacing=1 id="wireguard_acl_pannel"></table>
+			</div>
+			<br><hr>
 		</div>
 	</div>
-	<button type="button" value="Save" id="save-subscribe-node" onclick="manipulate_conf('wireguard_config.sh', 7)" class="btn btn-primary boxr7">保存本页设置 <i class="icon-check"></i></button>
+	<div id="acl_userreadme" class="box boxr3" style="margin-top: 15px;">
+	<div class="heading"><a class="pull-right" data-toggle="tooltip" title="Hide/Show Notes" href="javascript:toggleVisibility('notes');"><span id="sesdivnotesshowhide"><i class="icon-chevron-up"></i></span></a></div>
+	<div class="section content" id="sesdivnotes" style="display:">
+			<li> 所有模式均支持UDP代理</li>
+			<li> MAC暂不可用，请使用IP设置访问控制</li>
+	</div>
+	</div>
+	<!-- ------------------ 附加设置 --------------------- -->
 	<div class="box boxr5" id="wireguard_addon_tab" style="margin-top: 0px;">
 		<div class="heading"></div>
 		<div class="content" style="margin-top: -20px;">

@@ -174,6 +174,7 @@
 		var option_acl_port = [['80,443', '80,443'], ['22,80,443', '22,80,443'], ['all', '全部端口'],['0', '自定义']];
 		var option_acl_port_name = ['80,443', '22,80,443', '全部端口', '自定义'];
 		var option_method = [['none', 'none'],['rc4', 'rc4'], ['rc4-md5', 'rc4-md5'], ['rc4-md5-6', 'rc4-md5-6'], ['aes-128-gcm', 'aes-128-gcm'], ['aes-192-gcm', 'aes-192-gcm'], ['aes-256-gcm', 'aes-256-gcm'], ['aes-128-cfb', 'aes-128-cfb'], ['aes-192-cfb', 'aes-192-cfb'], ['aes-256-cfb', 'aes-256-cfb'], ['aes-128-ctr', 'aes-128-ctr'], ['aes-192-ctr', 'aes-192-ctr'], ['aes-256-ctr', 'aes-256-ctr'], ['camellia-128-cfb', 'camellia-128-cfb'], ['camellia-192-cfb', 'camellia-192-cfb'], ['camellia-256-cfb', 'camellia-256-cfb'], ['bf-cfb', 'bf-cfb'], ['cast5-cfb', 'cast5-cfb'], ['idea-cfb', 'idea-cfb'], ['rc2-cfb', 'rc2-cfb'], ['seed-cfb', 'seed-cfb'], ['salsa20', 'salsa20'], ['chacha20', 'chacha20'], ['chacha20-ietf', 'chacha20-ietf'], ['chacha20-ietf-poly1305', 'chacha20-ietf-poly1305'], ['xchacha20-ietf-poly1305', 'xchacha20-ietf-poly1305']];
+		var option_mptcp = [['0', '关闭'],['1', '开启']];
 		var option_ssr_protocal = [['origin','origin'],['verify_simple','verify_simple'],['verify_sha1','verify_sha1'],['auth_sha1','auth_sha1'],['auth_sha1_v2','auth_sha1_v2'],['auth_sha1_v4','auth_sha1_v4'],['auth_aes128_md5','auth_aes128_md5'],['auth_aes128_sha1','auth_aes128_sha1'],['auth_chain_a','auth_chain_a'],['auth_chain_b','auth_chain_b'],['auth_chain_c','auth_chain_c'],['auth_chain_d','auth_chain_d'],['auth_chain_e','auth_chain_e'],['auth_chain_f','auth_chain_f']];
 		var option_ssr_obfs = [['plain','plain'],['http_simple','http_simple'],['http_post','http_post'],['tls1.2_ticket_auth','tls1.2_ticket_auth']];
 		var option_dns_china = [['1', '运营商DNS【自动获取】'],  ['2', '阿里DNS1【223.5.5.5】'],  ['3', '阿里DNS2【223.6.6.6】'],  ['4', '114DNS1【114.114.114.114】'],  ['5', '114DNS1【114.114.115.115】'],  ['6', 'cnnic DNS【1.2.4.8】'],  ['7', 'cnnic DNS【210.2.4.8】'],  ['8', 'oneDNS1【112.124.47.27】'],  ['9', 'oneDNS2【114.215.126.16】'],  ['10', '百度DNS【180.76.76.76】'],  ['11', 'DNSpod DNS【119.29.29.29】'],  ['12', '自定义']];
@@ -181,7 +182,7 @@
 		var option_opendns = [['adguard-dns-family-ns1', 'Adguard DNS Family Protection 1'], ['adguard-dns-family-ns2', 'Adguard DNS Family Protection 2'], ['adguard-dns-ns1', 'Adguard DNS 1'], ['adguard-dns-ns2', 'Adguard DNS 2'], ['bikinhappy-sg', 'BikinHappy Singapore'], ['bn-fr0', 'Babylon Network France 0'], ['bn-fr0-ipv6', 'Babylon Network France 0 (IPv6)'], ['bn-fr1', 'Babylon Network France 1'], ['bn-fr1-ipv6', 'Babylon Network France 1 (IPv6)'], ['bn-nl0', 'Babylon Network Netherlands 0'], ['bn-nl0-ipv6', 'Babylon Network Netherlands 0 (IPv6)'], ['cisco', 'Cisco OpenDNS'], ['cisco-familyshield', 'Cisco OpenDNS with FamilyShield'], ['cisco-ipv6', 'Cisco OpenDNS over IPv6'], ['cpunks-ru', 'Cypherpunks.ru'], ['cs-caeast', 'CS Canada east DNSCrypt server'], ['cs-cawest', 'CS Canada west DNSCrypt server'], ['cs-cfi', 'CS cryptofree France DNSCrypt server'], ['cs-cfii', 'CS secondary cryptofree France DNSCrypt server'], ['cs-ch', 'CS Switzerland DNSCrypt server'], ['cs-de', 'CS Frankfurt, DE DNSCrypt server'], ['cs-de3', 'CS Dusseldorf, DE DNSCrypt server'], ['cs-dk', 'CS Denmark DNSCrypt server'], ['cs-dk2', 'CS secondary Denmark DNSCrypt server'], ['cs-es', 'CS Spain DNSCrypt server'], ['cs-fi', 'CS Finland DNSCrypt server'], ['cs-fr', 'CS France DNSCrypt server'], ['cs-fr2', 'CS secondary France DNSCrypt server'], ['cs-lt', 'CS Lithuania DNSCrypt server'], ['cs-lv', 'CS Latvia DNSCrypt server'], ['cs-md', 'CS Moldova DNSCrypt server'], ['cs-nl', 'CS Netherlands DNSCrypt server'], ['cs-pl', 'CS Poland DNSCrypt server'], ['cs-pt', 'CS Portugal DNSCrypt server'], ['cs-ro', 'CS Romania DNSCrypt server'], ['cs-rome', 'CS Italy DNSCrypt server'], ['cs-uk', 'CS England DNSCrypt server'], ['cs-useast', 'CS New York City NY US DNSCrypt server'], ['cs-useast2', 'CS Washington DC US DNSCrypt server'], ['cs-usnorth', 'CS Chicago IL US DNSCrypt server'], ['cs-ussouth', 'CS Dallas TX US DNSCrypt server'], ['cs-ussouth2', 'CS Atlanta GA US DNSCrypt server'], ['cs-uswest', 'CS Seattle WA US DNSCrypt server'], ['cs-uswest3', 'CS secondary Las Vegas NV US DNSCrypt server'], ['cs-uswest5', 'CS Los Angeles CA US DNSCrypt server'], ['d0wn-at-ns1', 'D0wn Resolver Austria 01'], ['d0wn-cz-ns1', 'D0wn Resolver Czech Republic 01'], ['d0wn-de-ns1', 'D0wn Resolver Germany 01'], ['d0wn-de-ns1-ipv6', 'D0wn Resolver Germany 01 over IPv6'], ['d0wn-es-ns1', 'D0wn Resolver Spain 01'], ['d0wn-fr-ns1', 'D0wn Resolver France 01'], ['d0wn-fr-ns2', 'D0wn Resolver France 02'], ['d0wn-fr-ns2-ipv6', 'D0wn Resolver France 02 over IPv6'], ['d0wn-gr-ns1', 'D0wn Resolver Greece 01'], ['d0wn-id-ns1', 'D0wn Resolver Indonesia 01'], ['d0wn-is-ns1', 'D0wn Resolver Iceland 01'], ['d0wn-is-ns2', 'D0wn Resolver Iceland 02'], ['d0wn-it-ns1', 'D0wn Resolver Italy 01'], ['d0wn-lv-ns1', 'D0wn Resolver Latvia 01'], ['d0wn-lv-ns2', 'D0wn Resolver Latvia 02'], ['d0wn-lv-ns2-ipv6', 'D0wn Resolver Latvia 01 over IPv6'], ['d0wn-md-ns1', 'D0wn Resolver Moldova 01'], ['d0wn-md-ns1-ipv6', 'D0wn Resolver Moldova 01 over IPv6'], ['d0wn-mx-ns1', 'D0wn Resolver Mexico 01'], ['d0wn-nl-ns1', 'D0wn Resolver Netherlands 01'], ['d0wn-nl-ns1-ipv6', 'D0wn Resolver Netherlands 01 over IPv6'], ['d0wn-nl-ns2', 'D0wn Resolver Netherlands 02'], ['d0wn-nl-ns2-ipv6', 'D0wn Resolver Netherlands 02 over IPv6'], ['d0wn-nl-ns4', 'D0wn Resolver Netherlands 04'], ['d0wn-random-ns1', 'D0wn Resolver Moldova Random 01'], ['d0wn-random-ns1-ipv6', 'D0wn Resolver Moldova Random 01 over IPv6'], ['d0wn-random-ns2', 'D0wn Resolver Netherlands Random 02'], ['d0wn-random-ns2-ipv6', 'D0wn Resolver Netherlands Random 02 over IPv6'], ['d0wn-ru-ns1', 'D0wn Resolver Russia 01'], ['d0wn-se-ns1', 'D0wn Resolver Sweden 01'], ['d0wn-se-ns1-ipv6', 'D0wn Resolver Sweden 01 over IPv6'], ['d0wn-se-ns2', 'D0wn Resolver Sweden 02'], ['d0wn-sg-ns1', 'D0wn Resolver Singapore 01'], ['d0wn-sg-ns1-ipv6', 'D0wn Resolver Singapore 01 over IPv6'], ['d0wn-tz-ns1', 'D0wn Resolver Tanzania 01'], ['d0wn-tz-ns1-ipv6', 'D0wn Resolver Tanzania 01 over IPv6'], ['d0wn-us-ns1', 'D0wn Resolver United States of America 01'], ['d0wn-us-ns2', 'D0wn Resolver United States of America 02'], ['d0wn-us-ns4', 'D0wn Resolver United States of America 04'], ['d0wn-za-ns1', 'D0wn Resolver South Africa 01'], ['dnscrypt.ca-1', 'dnscrypt.ca Server 1'], ['dnscrypt.ca-2', 'dnscrypt.ca Server 2'], ['dnscrypt.eu-dk', 'DNSCrypt.eu Denmark'], ['dnscrypt.eu-dk-ipv6', 'DNSCrypt.eu Denmark over IPv6'], ['dnscrypt.eu-nl', 'DNSCrypt.eu Holland'], ['dnscrypt.nl-ns0', 'DNSCrypt.nl The Netherlands (NL)'], ['dnscrypt.nl-ns0-ipv6', 'DNSCrypt.nl The Netherlands (NL) over IPv6'], ['dnscrypt.org-fr', 'DNSCrypt.org France'], ['fvz-anyone', 'Primary OpenNIC Anycast DNS Resolver'], ['fvz-anytwo', 'Secondary OpenNIC Anycast DNS Resolver'], ['ipredator', 'Ipredator.se Server'], ['ns0.dnscrypt.is', 'ns0.dnscrypt.is in Reykjavk, Iceland'], ['okturtles', 'okTurtles'], ['opennic-tumabox', 'TumaBox'], ['opennic-tumabox-ipv6', 'TumaBox over IPv6'], ['securedns', 'SecureDNS'], ['securedns-ipv6', 'SecureDNS over IPv6'], ['soltysiak', 'Soltysiak'], ['soltysiak-ipv6', 'Soltysiak over IPv6'], ['ventricle.us', 'Anatomical DNS'], ['yandex', 'Yandex']];
 		var option_status_inter = [['0', '不更新'], ['5', '5s'], ['10', '10s'], ['15', '15s'], ['30', '30s'], ['60', '60s']];
 		var option_sleep = [['0', '0s'], ['5', '5s'], ['10', '10s'], ['15', '15s'], ['30', '30s'], ['60', '60s']];
-		var option_ss_obfs = [['0','关闭'],['tls','tls'],['http','http']];
+		var option_ss_obfs = [['0','关闭'],['obfs-http','obfs-http'],['obfs-tls','obfs-tls'],['v2ray-http','v2ray-http'],['v2ray-tls','v2ray-tls'],['v2ray-quic','v2ray-quic']];
 		var option_lb_policy = [['1', '负载均衡'], ['2', '主用节点'], ['3', '备用节点']];
 		var option_lb_policy_name = ['', '负载均衡', '主用节点', '备用节点'];
 		var ssbasic = ["mode", "server", "port", "password", "method", "ss_obfs", "ss_obfs_host" ];
@@ -2006,14 +2007,14 @@
 				type: 2,
 				shade: .7,
 				scrollbar: 0,
-				title: '国内外分流信息:ip111.cn',
-				area: ['750px', '490px'],
+				title: '国内外分流信息',
+				area: ['780px', '450px'],
 				fixed: false, //不固定
 				maxmin: true,
 				shadeClose: 1,
 				id: 'LAY_layuipro',
 				btnAlign: 'c',
-				content: ['http://ip111.cn/', 'no'],
+				content: ['https://ip.koolcenter.com/get-ip.html', 'no'],
 			});
 		}
 
@@ -2210,7 +2211,7 @@
 				success: function(response){
 					if (response.result != "-1"){
 						wans = eval(Base64.decode(response.result));
-						wans  = wans.sort();
+						if(wans == null) wans=[]; else wans = wans.sort();
 						if(wans.length > 1){
 							wans.unshift(["0","不指定"]);
 						}else if (wans.length == 0){
@@ -2223,12 +2224,12 @@
 				error:function(){
 					get_wans_list2();
 				},
-				timeout:1000
+				timeout:10000
 			});
 		}
 		
 		function get_wans_list2(){
-			XHR.get('/cgi-bin/luci/admin/network/mwan/overview/interface_status', null,
+			XHR.get('/cgi-bin/luci/admin/status/mwan/interface_status', null,
 				function(x, mArray){
 					if (mArray.wans){
 						for ( var i = 0; i < mArray.wans.length; i++ ){
@@ -2990,7 +2991,7 @@
 			E("_ss_basic_kcp_status").innerHTML = "KCP状态 - 提交中...暂停获取状态！";
 			E("_ss_basic_lb_status").innerHTML = "负载均衡 - 提交中...暂停获取状态！";
 			var paras_chk = ["enable", "gfwlist_update", "chnroute_update", "cdn_update", "pcap_update", "chromecast", "online_links_goss"];
-			var paras_inp = ["ss_basic_node", "ss_basic_mode", "ss_basic_server", "ss_basic_port", "ss_basic_password", "ss_basic_method", "ss_basic_ss_obfs", "ss_basic_ss_obfs_host", "ss_basic_rss_protocal", "ss_basic_rss_protocal_para", "ss_basic_rss_obfs", "ss_basic_rss_obfs_para", "ss_dns_china", "ss_dns_china_user", "ss_dns_foreign", "ss_dns2socks_user", "ss_sstunnel_user", "ss_opendns", "ss_pdnsd_method", "ss_pdnsd_user", "ss_chinadns_method", "ss_chinadns_user", "ss_basic_rule_update", "ss_basic_rule_update_day", "ss_basic_rule_update_hr", "ss_basic_refreshrate", "ss_basic_bypass", "ss_acl_default_mode", "ss_acl_default_port", "ssr_subscribe_mode", "ssr_subscribe_obfspara", "ssr_subscribe_obfspara_val", "ss_mwan_ping_dst", "ss_mwan_china_dns_dst", "ss_mwan_vps_ip_dst", "ss_basic_node_update", "ss_basic_node_update_day", "ss_basic_node_update_hr"];
+			var paras_inp = ["ss_basic_node", "ss_basic_mode", "ss_basic_server", "ss_basic_port", "ss_basic_password", "ss_basic_method", "ss_basic_mptcp", "ss_basic_ss_obfs", "ss_basic_ss_obfs_host", "ss_basic_rss_protocal", "ss_basic_rss_protocal_para", "ss_basic_rss_obfs", "ss_basic_rss_obfs_para", "ss_dns_china", "ss_dns_china_user", "ss_dns_foreign", "ss_dns2socks_user", "ss_sstunnel_user", "ss_opendns", "ss_pdnsd_method", "ss_pdnsd_user", "ss_chinadns_method", "ss_chinadns_user", "ss_basic_rule_update", "ss_basic_rule_update_day", "ss_basic_rule_update_hr", "ss_basic_refreshrate", "ss_basic_bypass", "ss_acl_default_mode", "ss_acl_default_port", "ssr_subscribe_mode", "ssr_subscribe_obfspara", "ssr_subscribe_obfspara_val", "ss_mwan_ping_dst", "ss_mwan_china_dns_dst", "ss_mwan_vps_ip_dst", "ss_basic_node_update", "ss_basic_node_update_day", "ss_basic_node_update_hr"];
 			// collect data from checkbox
 			for (var i = 0; i < paras_chk.length; i++) {
 				dbus["ss_basic_" + paras_chk[i]] = E('_ss_basic_' + paras_chk[i] ).checked ? '1':'0';
@@ -3581,6 +3582,7 @@
 						{ title: '服务器端口', name:'ss_basic_port',type:'text',style:input_style,maxlen:5,value:"" },
 						{ title: '密码', name:'ss_basic_password',type:'password',style:input_style,maxlen:64,value:"",help: '如果你的密码内有特殊字符，可能会导致密码参数不能正确的传给ss，导致启动后不能使用ss。',peekaboo: 1  },
 						{ title: '加密方式', name:'ss_basic_method',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb" },
+						{ title: 'MPTCP', name:'ss_basic_mptcp',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0",help: '需要服务器支持。' },
 						{ title: '混淆(AEAD)', name:'ss_basic_ss_obfs',type:'select',style:select_style,options:option_ss_obfs,value: dbus.ss_basic_ss_obfs || "0" },
 						{ title: '混淆主机名', name:'ss_basic_ss_obfs_host',type:'text',style:input_style,value:dbus.ss_basic_ss_obfs_host || "" },
 						{ title: '协议 (protocal)', name:'ss_basic_rss_protocal',type:'select',style:select_style,options:option_ssr_protocal,value: dbus.ss_basic_rss_protocal || "auth_sha1_v4" },
@@ -3609,6 +3611,10 @@
 						{ title: '加密方式', multi: [
 							{ name:'ss_basic_method',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb", suffix: ' &nbsp;&nbsp;' },
 							{ name:'ss_basic_method_1',type:'select',style:select_style,options:option_method,value: dbus.ss_basic_method || "aes-256-cfb" }
+						]},
+						{ title: 'MPTCP', multi: [
+							{ name:'ss_basic_mptcp',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0", help: '需要服务器支持。', suffix: ' &nbsp;&nbsp;' },
+							{ name:'ss_basic_mptcp_1',type:'select',style:select_style,options:option_mptcp,value: dbus.ss_basic_mptcp || "0" }
 						]},
 						{ title: '混淆(AEAD)', multi: [
 							{ name:'ss_basic_ss_obfs',type:'select',style:select_style,options:option_ss_obfs,value: dbus.ss_basic_ss_obfs || "0", suffix: ' &nbsp;&nbsp;' },

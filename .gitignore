@@ -3,6 +3,7 @@ tunnel
 .lconfig.json.js
 .htaccess
 .user.ini
+backup.sh
 /homebridge/build
 /homeassistant/build
 /lnmp/build
@@ -34,4 +35,11 @@ tunnel
 /bridge/build
 /sgame/build
 /wireguard/build
+/koolddns/build
+/docker/build
+/virtual/build
+/relay/build
+/mia/build
+/timewol/build
+/webrecord/build
 /test

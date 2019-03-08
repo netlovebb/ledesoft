@@ -1,9 +1,9 @@
 {
-"version":"0.8",
-"md5":"c377cf9599922bce535f7dada07b42bc",
+"version":"0.9",
+"md5":"614fb961a0a44bc618cc2dc359fb2c65",
 "home_url":"Module_anyconnect.asp",
 "title":"AnyConnect Server",
 "description":"与你的网络无缝并行",
-"changelog":"增加重新生成证书按钮",
-"build_date":"2017-12-19_20:30:49"
+"changelog":"优化安装提示",
+"build_date":"2019-01-25_00:21:08"
 }

@@ -1,9 +1,9 @@
 {
-"version":"0.6",
-"md5":"60fb5016ee27c687527c401b7cfff5b8",
+"version":"0.8.7",
+"md5":"25a08d222a67262c23aac480d90320be",
 "home_url":"Module_sgame.asp",
 "title":"游戏加速器",
 "description":"外服游戏解决方案",
-"changelog":"完善功能",
-"build_date":"2018-10-22_00:30:49"
+"changelog":"修复udp2waw开关失效",
+"build_date":"2019-02-27_23:02:35"
 }

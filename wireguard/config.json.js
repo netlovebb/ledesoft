@@ -1,9 +1,9 @@
 {
-"version":"0.1",
-"md5":"2b6f6ae9768f955a0a1ed9e327c441c5",
+"version":"0.3",
+"md5":"e9d5adb2e65788b379e643261c4de05a",
 "home_url":"Module_wireguard.asp",
 "title":"WireGuard",
 "description":"高效的次世代VPN",
-"changelog":"",
-"build_date":"2018-11-14_14:52:36"
+"changelog":"增加模式",
+"build_date":"2019-01-15_12:40:39"
 }

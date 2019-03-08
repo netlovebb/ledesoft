@@ -66,15 +66,26 @@
             "version": "0.5"
         }, 
         {
-            "build_date": "2018-10-22_00:30:49", 
-            "changelog": "完善功能", 
+            "build_date": "2019-02-27_23:02:35", 
+            "changelog": "修复udp2waw开关失效", 
             "description": "外服游戏解决方案", 
             "home_url": "Module_sgame.asp", 
-            "md5": "60fb5016ee27c687527c401b7cfff5b8", 
+            "md5": "25a08d222a67262c23aac480d90320be", 
             "name": "sgame", 
             "tar_url": "sgame/sgame.tar.gz", 
             "title": "游戏加速器", 
-            "version": "0.6"
+            "version": "0.8.7"
+        }, 
+        {
+            "build_date": "2019-03-01_01:21:54", 
+            "changelog": "", 
+            "description": "端口映射、中转流量", 
+            "home_url": "Module_relay.asp", 
+            "md5": "c8ca3f8d4d0e5d2cfef5481012018108", 
+            "name": "relay", 
+            "tar_url": "relay/relay.tar.gz", 
+            "title": "瑞士军刀", 
+            "version": "0.1"
         }, 
         {
             "build_date": "2018-09-23_18:26:03", 
@@ -132,15 +143,15 @@
             "version": "0.1"
         }, 
         {
-            "build_date": "2018-10-18_22:59:54", 
-            "changelog": "回滚到2.1.6", 
+            "build_date": "2019-03-07_00:32:21", 
+            "changelog": "修复obfs", 
             "description": "轻松科学上网~", 
             "home_url": "Module_koolss.asp", 
-            "md5": "c086fbc4b8b038357e0c83cb83bc96ab", 
+            "md5": "e2871cabb7971cccd7a997be8efe3766", 
             "name": "koolss", 
             "tar_url": "koolss/koolss.tar.gz", 
             "title": "科学上网插件", 
-            "version": "2.1.8"
+            "version": "2.2.1"
         }, 
         {
             "name": "test", 
@@ -170,15 +181,15 @@
             "version": "0.3"
         }, 
         {
-            "build_date": "2018-05-12_19:19:17", 
-            "changelog": "增加按国家分流", 
+            "build_date": "2019-03-05_13:01:00", 
+            "changelog": "增加客户端分流", 
             "description": "多运营商自动分流", 
             "home_url": "Module_policy.asp", 
-            "md5": "08a0d44a1001f5fc154f7b73d231407b", 
+            "md5": "d745cc09f4a02dd2cc33055ff131a609", 
             "name": "policy", 
             "tar_url": "policy/policy.tar.gz", 
             "title": "策略路由", 
-            "version": "0.4"
+            "version": "0.7"
         }, 
         {
             "build_date": "2018-05-28_12:44:39", 
@@ -203,15 +214,15 @@
             "version": "1.1.0"
         }, 
         {
-            "build_date": "2018-04-24_15:44:59", 
-            "changelog": "修复初始安装问题", 
+            "build_date": "2019-01-16_17:35:38", 
+            "changelog": "修复无法安装的问题", 
             "description": "Debian系统和Unifi控制器", 
             "home_url": "Module_unifi.asp", 
-            "md5": "1185e11cf3b923f0677cb7acb9791223", 
+            "md5": "c5b683e798b1f75767be6d72733b020f", 
             "name": "unifi", 
             "tar_url": "unifi/unifi.tar.gz", 
             "title": "Unifi Controller", 
-            "version": "0.6"
+            "version": "0.7"
         }, 
         {
             "build_date": "2018-07-03_17:14:32", 
@@ -235,25 +246,26 @@
             "version": "1.0"
         }, 
         {
-            "build_date": "2018-11-06_00:22:22", 
-            "changelog": "修复BUG", 
+            "build_date": "2019-01-12_21:30:21", 
+            "changelog": "修正界面样式", 
             "description": "听说KP和软路由更搭哦~", 
             "home_url": "Module_koolproxy.asp", 
-            "md5": "0a7da3c9153a6e4dfb4b076c367bf90a", 
+            "md5": "06ad432400ca34919b105a7621372ec6", 
             "name": "koolproxy", 
             "tar_url": "koolproxy/koolproxy.tar.gz", 
             "title": "koolproxy", 
-            "version": "3.8.4.8"
+            "version": "3.8.5.1"
         }, 
         {
-            "build_date": "2017-09-09_18:25:45", 
-            "description": "DNSPOD动态域名解析", 
-            "home_url": "Module_dnspod.asp", 
-            "md5": "97477066986e4c8ad94f10129eed8881", 
-            "name": "dnspod", 
-            "tar_url": "dnspod/dnspod.tar.gz", 
-            "title": "dnspod", 
-            "version": "1.4"
+            "build_date": "2019-01-12_11:37:17", 
+            "changelog": "修复导致ui错位的bug", 
+            "description": "动态域名解析工具", 
+            "home_url": "Module_koolddns.asp", 
+            "md5": "4f3c9ddd36e319db8822e42c2547e067", 
+            "name": "koolddns", 
+            "tar_url": "koolddns/koolddns.tar.gz", 
+            "title": "Koolddns", 
+            "version": "0.6.1"
         }, 
         {
             "build_date": "2018-05-12_14:47:04", 
@@ -278,26 +290,15 @@
             "version": "0.4"
         }, 
         {
-            "build_date": "2017-10-18_11:08:01", 
-            "changelog": "", 
-            "description": "修复迅雷不能下载的BUG", 
-            "home_url": "Module_xldoc.asp", 
-            "md5": "f364044d13f0917398079b05e472f90a", 
-            "name": "xldoc", 
-            "tar_url": "xldoc/xldoc.tar.gz", 
-            "title": "救救迅雷", 
-            "version": "0.2"
-        }, 
-        {
-            "build_date": "2018-05-20_17:03:22", 
-            "changelog": "增加更多模块", 
+            "build_date": "2019-02-25_16:06:50", 
+            "changelog": "修改bbrplus模块名称", 
             "description": "魔改BBR", 
             "home_url": "Module_bbr.asp", 
-            "md5": "ae432688ea655bacf86449c7bc4b4217", 
+            "md5": "624440f12fe53e349cd6c8b355ffc7e5", 
             "name": "bbr", 
             "tar_url": "bbr/bbr.tar.gz", 
             "title": "BBR MOD", 
-            "version": "0.2"
+            "version": "0.4"
         }, 
         {
             "build_date": "2018-10-18_19:08:26", 
@@ -311,26 +312,26 @@
             "version": "1.0.8"
         }, 
         {
-            "build_date": "2018-11-14_14:52:36", 
-            "changelog": "", 
+            "build_date": "2019-01-15_12:40:39", 
+            "changelog": "增加模式", 
             "description": "高效的次世代VPN", 
             "home_url": "Module_wireguard.asp", 
-            "md5": "2b6f6ae9768f955a0a1ed9e327c441c5", 
+            "md5": "e9d5adb2e65788b379e643261c4de05a", 
             "name": "wireguard", 
             "tar_url": "wireguard/wireguard.tar.gz", 
             "title": "WireGuard", 
-            "version": "0.1"
+            "version": "0.3"
         }, 
         {
-            "build_date": "2017-12-19_20:30:49", 
-            "changelog": "增加重新生成证书按钮", 
+            "build_date": "2019-01-25_00:21:08", 
+            "changelog": "优化安装提示", 
             "description": "与你的网络无缝并行", 
             "home_url": "Module_anyconnect.asp", 
-            "md5": "c377cf9599922bce535f7dada07b42bc", 
+            "md5": "614fb961a0a44bc618cc2dc359fb2c65", 
             "name": "anyconnect", 
             "tar_url": "anyconnect/anyconnect.tar.gz", 
             "title": "AnyConnect Server", 
-            "version": "0.8"
+            "version": "0.9"
         }, 
         {
             "build_date": "2017-10-25_10:49:24", 
@@ -365,15 +366,26 @@
             "version": "0.6"
         }, 
         {
-            "build_date": "2018-05-02_15:06:09", 
-            "changelog": "修复2.17实时流量的问题", 
+            "build_date": "2019-01-01_23:37:39", 
+            "changelog": "修复2.26默认主题汉化问题", 
             "description": "快速修复当前固件中的BUG", 
             "home_url": "Module_hotfix.asp", 
-            "md5": "f6b2c17521cf557547ad2f22a26d43ff", 
+            "md5": "6e03bc4a9ae7434f7aa711882c8361c6", 
             "name": "hotfix", 
             "tar_url": "hotfix/hotfix.tar.gz", 
             "title": "HOTFIX", 
-            "version": "0.2.3"
+            "version": "0.2.4"
+        }, 
+        {
+            "build_date": "2019-03-06_17:29:06", 
+            "changelog": "", 
+            "description": "在指定时间唤醒设备", 
+            "home_url": "Module_timewol.asp", 
+            "md5": "931ef3de97eb255cf0fed4b1f4bce4cc", 
+            "name": "timewol", 
+            "tar_url": "timewol/timewol.tar.gz", 
+            "title": "定时唤醒", 
+            "version": "0.1"
         }, 
         {
             "build_date": "2018-09-29_17:10:04", 
@@ -431,6 +443,17 @@
             "version": "0.1"
         }, 
         {
+            "build_date": "2019-02-12_22:32:00", 
+            "changelog": "修复创建容器的错误", 
+            "description": "轻量虚拟化应用程序", 
+            "home_url": "Module_docker.asp", 
+            "md5": "1db81c9a93ff2f4a7d6cc1d657c57eec", 
+            "name": "docker", 
+            "tar_url": "docker/docker.tar.gz", 
+            "title": "Docker", 
+            "version": "0.2.3"
+        }, 
+        {
             "build_date": "2017-10-19_16:08:11", 
             "changelog": "修复新固件下客户端上线通知失效", 
             "description": "推送路由器信息到微信~", 
@@ -442,37 +465,48 @@
             "version": "1.1.6"
         }, 
         {
-            "build_date": "2018-08-10_10:46:43", 
-            "changelog": "修复重装系统后的启动问题", 
-            "description": "路由流量指明灯", 
+            "build_date": "2019-03-02_16:54:35", 
+            "changelog": "优化接口获取", 
+            "description": "系统路由表设置", 
             "home_url": "Module_routetable.asp", 
-            "md5": "ef5447732b54dcf8e84f008a8047bb9e", 
+            "md5": "9ba11c2a485883017f0efe0c1073dd36", 
             "name": "routetable", 
             "tar_url": "routetable/routetable.tar.gz", 
-            "title": "路由表设置", 
-            "version": "0.6"
+            "title": "路由表", 
+            "version": "0.7"
         }, 
         {
-            "build_date": "2018-09-05_00:00:41", 
-            "changelog": "修复token和更新版本", 
+            "build_date": "2018-12-13_21:54:49", 
+            "changelog": "修复开机启动脚本", 
             "description": "强大易用的全平台同步工具", 
             "home_url": "Module_easyexplorer.asp", 
-            "md5": "dc7f27b8cdfe57c4ae23a5fcc7c1703a", 
+            "md5": "7ba29c06baf7d95ecab9e136101fefaf", 
             "name": "easyexplorer", 
             "tar_url": "easyexplorer/easyexplorer.tar.gz", 
             "title": "EasyExplorer", 
-            "version": "0.8"
+            "version": "1.0"
         }, 
         {
-            "build_date": "2018-10-22_11:05:20", 
-            "changelog": "更新3.4.8", 
+            "build_date": "2019-01-21_20:43:02", 
+            "changelog": "增加流量探测开关", 
             "description": "模块化的代理软件包", 
             "home_url": "Module_v2ray.asp", 
-            "md5": "39b77e1733390e04dcde49219418e6b3", 
+            "md5": "d0a1a4bb929106c5e70ce5af38b429cb", 
             "name": "v2ray", 
             "tar_url": "v2ray/v2ray.tar.gz", 
             "title": "V2Ray", 
-            "version": "1.8"
+            "version": "2.3.4"
+        }, 
+        {
+            "build_date": "2019-02-25_21:35:18", 
+            "changelog": "", 
+            "description": "增强虚拟机操作系统性能", 
+            "home_url": "Module_virtual.asp", 
+            "md5": "b6564647ad0179b48debd483b2f2cfd2", 
+            "name": "virtual", 
+            "tar_url": "virtual/virtual.tar.gz", 
+            "title": "虚拟机助手", 
+            "version": "0.1"
         }, 
         {
             "build_date": "2018-07-01_17:38:34", 
@@ -484,6 +518,17 @@
             "tar_url": "homebridge/homebridge.tar.gz", 
             "title": "Homebridge", 
             "version": "0.8"
+        }, 
+        {
+            "build_date": "2019-03-06_17:54:34", 
+            "changelog": "", 
+            "description": "限时网址及协议过滤", 
+            "home_url": "Module_mia.asp", 
+            "md5": "a90bada3770bc781084784d19d50b0dd", 
+            "name": "mia", 
+            "tar_url": "mia/mia.tar.gz", 
+            "title": "家长控制", 
+            "version": "0.1"
         }, 
         {
             "build_date": "2017-11-24_18:16:42", 
@@ -508,14 +553,25 @@
             "version": "1.1"
         }, 
         {
-            "build_date": "2018-10-26_12:35:10", 
-            "changelog": "", 
+            "build_date": "2019-02-12_22:47:25", 
+            "changelog": "更新版本到3.6.4", 
             "description": "百度网盘同步管理工具", 
             "home_url": "Module_baidupcs.asp", 
-            "md5": "6d9e55a2c70b6db32debc53a9699b772", 
+            "md5": "be01e1fc4c1abb071282d9a151720ee0", 
             "name": "baidupcs", 
             "tar_url": "baidupcs/baidupcs.tar.gz", 
             "title": "百度网盘", 
+            "version": "0.2"
+        }, 
+        {
+            "build_date": "2019-03-06_20:57:24", 
+            "changelog": "", 
+            "description": "查看网址和搜索记录", 
+            "home_url": "Module_webrecord.asp", 
+            "md5": "81b23b5fa63f404a9b311d8e268d1059", 
+            "name": "webrecord", 
+            "tar_url": "webrecord/webrecord.tar.gz", 
+            "title": "上网记录", 
             "version": "0.1"
         }, 
         {
@@ -574,16 +630,6 @@
             "version": "2.3"
         }, 
         {
-            "build_date": "2017-09-09_18:21:59", 
-            "description": "阿里云解析自动更新IP", 
-            "home_url": "Module_aliddns.asp", 
-            "md5": "e980e0c85dd809ba3f831744d08c628d", 
-            "name": "aliddns", 
-            "tar_url": "aliddns/aliddns.tar.gz", 
-            "title": "AliDDNS", 
-            "version": "0.7"
-        }, 
-        {
             "build_date": "2018-10-21_18:15:54", 
             "changelog": "", 
             "description": "小巧便携的网盘", 
@@ -637,21 +683,10 @@
             "tar_url": "netdata/netdata.tar.gz", 
             "title": "路由监控", 
             "version": "0.1"
-        }, 
-        {
-            "build_date": "2017-12-23_19:00:42", 
-            "changelog": "", 
-            "description": "宽带限速、优化", 
-            "home_url": "Module_sqos.asp", 
-            "md5": "7a5434881989c1645df4b1427fd77edd", 
-            "name": "sqos", 
-            "tar_url": "sqos/sqos.tar.gz", 
-            "title": "QOS", 
-            "version": "0.1"
         }
     ], 
     "home_url": "https://raw.githubusercontent.com/koolshare/koolshare.github.io/master", 
-    "md5": "1330ca65a882eaefccaa8dd4439933b7", 
+    "md5": "8375fa177f5df87dc8f15cfaeb0b8872", 
     "tar_url": "softcenter/softcenter.tar.gz", 
-    "version": "0.3.6"
+    "version": "0.3.7"
 }

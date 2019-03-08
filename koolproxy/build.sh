@@ -1,11 +1,11 @@
 #!/bin/sh
 
 MODULE="koolproxy"
-VERSION="3.8.4.8"
+VERSION="3.8.5.1"
 TITLE=koolproxy
 DESCRIPTION="听说KP和软路由更搭哦~"
 HOME_URL="Module_koolproxy.asp"
-CHANGELOG="修复BUG"
+CHANGELOG="修正界面样式"
 
 #get latest rules
 cd koolproxy/koolproxy/data/rules
@@ -14,9 +14,6 @@ wget https://kprule.com/koolproxy.txt
 wget https://kprule.com/daily.txt
 wget https://kprule.com/kp.dat
 wget https://kprule.com/user.txt
-wget https://kprule.com/easylistchina.txt
-wget https://kprule.com/chengfeng.txt
-wget https://kprule.com/fanboy.txt
 
 cd ../../../..
 # Check and include base

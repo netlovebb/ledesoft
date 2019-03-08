@@ -75,9 +75,7 @@ rm -rf $KSROOT/bin/Pcap_DNSProxy >/dev/null 2>&1
 rm -rf $KSROOT/bin/dnscrypt-proxy >/dev/null 2>&1
 rm -rf $KSROOT/bin/dns2socks >/dev/null 2>&1
 rm -rf $KSROOT/bin/chinadns >/dev/null 2>&1
-rm -rf $KSROOT/bin/resolveip >/dev/null 2>&1
-rm -rf $KSROOT/bin/busybox >/dev/null 2>&1
-rm -rf $KSROOT/bin/ps >/dev/null 2>&1
+rm -rf $KSROOT/bin/v2ray-plugin >/dev/null 2>&1
 rm -rf /usr/lib/lua/luci/controller/sadog.lua >/dev/null 2>&1
 [ -f "/koolshare/webs/files/koolss.tar.gz" ] && rm -rf /koolshare/webs/files/koolss.tar.gz
 

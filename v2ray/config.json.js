@@ -1,9 +1,9 @@
 {
-"version":"1.8",
-"md5":"39b77e1733390e04dcde49219418e6b3",
+"version":"2.3.4",
+"md5":"d0a1a4bb929106c5e70ce5af38b429cb",
 "home_url":"Module_v2ray.asp",
 "title":"V2Ray",
 "description":"模块化的代理软件包",
-"changelog":"更新3.4.8",
-"build_date":"2018-10-22_11:05:20"
+"changelog":"增加流量探测开关",
+"build_date":"2019-01-21_20:43:02"
 }

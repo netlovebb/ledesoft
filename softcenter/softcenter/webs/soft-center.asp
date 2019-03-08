@@ -260,7 +260,6 @@ ul.pullmsg > li{
     color: #6d140b;
     padding: 0px 0px;
 }
-
 #version > a:hover, a:active {
     color: #f36c21;
 }
@@ -270,8 +269,6 @@ ul.pullmsg > li{
 <script type="text/javascript" src="/js/tomato.js"></script>
 <script type="text/javascript" src="/layer/layer.js"></script>
 <script type="text/javascript">
-
-//APPS 控制模块
 var anmstatus=null;
 var softcenter = 1;
 var _responseLen;
@@ -313,59 +310,52 @@ function tabSelect(obj){
 		}
 	}
 }
-
-// 安装信息更新策略:
-// 当软件安装的时候,安装进程内部会有超时时间. 超过超时时间 没安装成功,则认为失败.
-// 但是路由内部的绝对时间与浏览器上的时间可能不同步,所以无法使用路由器内的时间. 浏览器的策略是,
-// 安装的时候会有一个同样的计时,若这个超时时间内,安装状态有变化,则更新安装状态.从而可以实时更新安装进程.
 var currState = {"installing": false, "lastChangeTick": 0, "lastStatus": "-1", "module":""};
 var softcenterUrl = "https://ledesoft.ddnsto.com";
 var dataTypeX = "jsonp";
 var softInfo = {};
 var appsInfo;
 var TimeOut = 0;
-//var extra_json;
 var Msginfos = [
-            "操作失败",
-            "已安装",
-            "初始化中...",
-            "正在下载...",
-            "正在安装中...",
-            "安装成功！请等待浏览器跳转！",
-            "卸载中......",
-            "卸载成功！请等待浏览器跳转",
-            "没有检测到在线版本号！",
-            "正在下载更新......",
-            "正在安装更新...",
-            "安装更新成功，请等待浏览器跳转！ ",
-            "下载文件校验不一致！",
-            "然而并没有更新！",
-            "正在检查是否有更新~",
-            "检测更新错误！"
-       		 ];
-//检查并切换服务器
+	"操作失败",
+	"已安装",
+	"初始化中...",
+	"正在下载...",
+	"正在安装中...",
+	"安装成功！请等待浏览器跳转！",
+	"卸载中......",
+	"卸载成功！请等待浏览器跳转",
+	"没有检测到在线版本号！",
+	"正在下载更新......",
+	"正在安装更新...",
+	"安装更新成功，请等待浏览器跳转！ ",
+	"下载文件校验不一致！",
+	"然而并没有更新！",
+	"正在检查是否有更新~",
+	"检测更新错误！"
+];
 $.ajax({
 	url: "https://ledesoft.ddnsto.com/softcenter/switch_server.json.js",
-    type: "GET",
-    dataType:'jsonp',
-    success: function() {
-        $('#server').html('服务器：LEDESoft');
-		notice_show();
-		softCenterInit();	
-    },
-    error: function() {
-        $('#server').html('服务器：访问故障');
+	type: "GET",
+	dataType: 'jsonp',
+	success: function() {
+		$('#server').html('服务器：LEDESoft');
 		notice_show();
 		softCenterInit();
-    },timeout:5000
+	},
+	error: function() {
+		$('#server').html('服务器：访问故障');
+		notice_show();
+		softCenterInit();
+	},
+	timeout: 5000
 });
-//推送信息
 function notice_show(){
-    $.ajax({
-        url: softcenterUrl+'/softcenter/push_message.json.js',
-        type: 'GET',
-        dataType: dataTypeX,
-        success: function(res) {
+	$.ajax({
+		url: softcenterUrl+'/softcenter/push_message.json.js',
+		type: 'GET',
+		dataType: dataTypeX,
+		success: function(res) {
 			$("#push_titile").html(res.title);
 			$("#push_content1").html(res.content1);
 			$("#push_content2").html(res.content2);
@@ -377,53 +367,40 @@ function notice_show(){
 				$("#push_content4").show();
 				$("#push_content4").html(res.content4);
 			}
-        }
-    });
+		}
+	});
 }
 
 function verifyFields (){
 	return true;
 }
-//类
 function appinstall(obj){
-    var name = obj.value;
+	var name = obj.value;
 	_formatData(name,'install');
 }
 function appuninstall(obj){
-    var name = obj.value;
-    var xxx = {"name":name};
+	var name = obj.value;
+	var xxx = {"name":name};
 	appUninstallModule(xxx);
 }
 function appupdata(obj){
-    var name = obj.value;
-    _formatData(name,'install');
+	var name = obj.value;
+	_formatData(name,'install');
 }
 function appInstallModule(moduleInfo){
-    appPostScript(moduleInfo, "ks_app_install.sh");
+	appPostScript(moduleInfo, "ks_app_install.sh");
 }
 function appUninstallModule(moduleInfo){
-	//询问框
 	layer.confirm('确定卸载吗？', {
 		shade: 0.8,
-		btn: ['确定', '不确定'] //按钮
+		btn: ['确定', '不确定']
 	}, function() {
 		layer.msg('开始卸载！', {
 			shade: 0.8,
 			icon: 5
 		});
-    	appPostScript(moduleInfo, "ks_app_remove.sh");
-	}, function() {
-		layer.msg('我知道你还是爱我的~', {
-			shade: 0.8,
-			icon: 6,
-    		time: 20000, //20s后自动关闭
-    		btn: ['爱你', '知道了']
-		});
+		appPostScript(moduleInfo, "ks_app_remove.sh");
 	});
-    //if (!window.confirm('确定卸载吗')){
-    //    return false;
-    //};
-    //appPostScript(moduleInfo, "ks_app_remove.sh");
 }
 function _formatData(name,mod){
 	$('button').addClass('disabled');
@@ -445,7 +422,29 @@ function _formatData(name,mod){
 		}
 	};
 }
-
+function get_overlay_status(){
+	var id = parseInt(Math.random() * 100000000);
+	var postData = {"id": id, "method": "ks_overlay_status.sh", "params":[], "fields": ""};
+	$.ajax({
+		type: "POST",
+		url: "/_api/",
+		async:true,
+		cache:false,
+		data: JSON.stringify(postData),
+		dataType: "json",
+		success: function(response){
+			if (response.result != -1){
+				var ot = response.result.split(">")[0] + " MB";
+				var ou = response.result.split(">")[1] + " MB";
+				var op = Math.round(parseInt(ou) / parseInt(ot) * 1000) / 10.00;
+				var info = "已用空间：" + ou + " / " + ot + " (" + op + "%)";
+				$("#overlay_status").show();
+				$("#overlay_status_text").attr("title", info);
+				$("#overlay_status_text div").attr("style", "width: " + op + "%;");
+			}
+		}
+	});
+}
 function getSoftCenter(obj){
 	$.ajax({
 		url:softcenterUrl+"/softcenter/app.json.js",
@@ -459,6 +458,7 @@ function getSoftCenter(obj){
 			var vhtml2 = "";
 			var appButton = "";
 			soft = re.apps;
+			get_overlay_status();
 			onlineversion = re.version;
 			locversion = obj["softcenter_version"];
 			$("#loading").hide();
@@ -501,10 +501,10 @@ function getSoftCenter(obj){
 								&nbsp;&nbsp;【<a href="https://github.com/koolshare/ledesoft/blob/master/softcenter/Changelog.txt" target="_blank"><u>更新日志</u></a>】\
 								&nbsp;&nbsp;【问题反馈:<a href="https://github.com/koolshare/ledesoft" target="_blank">&nbsp;&nbsp;<u>github</u></a>\
 								<a href="https://t.me/joinchat/DCq55kMMVu3lngw1wY6Zng" target="_blank">&nbsp;&nbsp;<u>telegram</u></a>\
-								<a href="http://koolshare.cn/forum-97-1.html" target="_blank">&nbsp;&nbsp;&nbsp;<u>koolshare</u></a>】');
+								<a href="http://koolshare.cn/forum-97-1.html" target="_blank">&nbsp;&nbsp;&nbsp;<u>koolshare</u></a>】\
+								');
 								
 			var object = $.extend([],obj, soft);
-			//console.log("object",object);
 			
 			var j=0;
 			var x=0;
@@ -521,15 +521,15 @@ function getSoftCenter(obj){
 				}
 			};
 			for(var i=0; i < object.length; i++) {  
-				o_name = object[i]["name"];				//内部软件名
-				o_title = object[i]["title"];			//显示软件名
-				o_home_url = object[i]["home_url"];			//调用网页地址
-				o_tar_url = object[i]["tar_url"];		//tar包相对地址  aria2/aria2.tar.gz
-				o_version = object[i]["version"];	//app版本号
-				o_md5 = object[i]["md5"];			//app MD5
-				o_description = object[i]["description"];//描述
-				o_changelog = object[i]["changelog"]||"";//描述
-				o_description = object[i]["description"]||"暂无描述";//描述
+				o_name = object[i]["name"];
+				o_title = object[i]["title"];
+				o_home_url = object[i]["home_url"];
+				o_tar_url = object[i]["tar_url"];
+				o_version = object[i]["version"];
+				o_md5 = object[i]["md5"];
+				o_description = object[i]["description"];
+				o_changelog = object[i]["changelog"]||"";
+				o_description = object[i]["description"]||"暂无描述";
 
 				appObject["app_"+o_name+"_name"] = o_name;
 				appObject["app_"+o_name+"_title"] = o_title;
@@ -615,7 +615,6 @@ function getSoftCenter(obj){
 					appPostScript(moduleInfo, "ks_app_install.sh");
 				});
 			}
-			// flip all software icon once and remain update style
 			if(($('.btn.btn-success'))){
 				var update_soft = $('.btn.btn-success').parent('DIV.appDesc').parent();
 				change1(update_soft);
@@ -623,14 +622,12 @@ function getSoftCenter(obj){
 			var normal_soft = $('.btn.btn-danger').parent('DIV.appDesc').parent();
 			change1(normal_soft);
 			change2(normal_soft);
-			//软件中心更新 end
 		},
 		error :function(data){
 			$("#loading").hide();
 			$('#server').html('网络异常！');
 			$("#version").html("<font color='#FF6A6A'>X 线上服务器超时 , 请稍后重试……</font>");
 			getLocalApp(obj)
-			//console.log("network error",data);
 		},
 		timeout:5000
 	});
@@ -639,7 +636,6 @@ function getLocalApp(obj){
 	var vhtml1 ="";
 	var j=0;
 	for(var p in obj) {
-		//console.log(p);  //获取到元素
 		if(p.indexOf("name") > 0 ){  
 			j++;
 			var appButton="";
@@ -655,34 +651,31 @@ function getLocalApp(obj){
 	$("#app1-server1-basic-tab").html('<i class="icon-system"></i> 已安装（'+j+'）');
 	$(".tabContent1").html(vhtml1);
 }
-//安装APP
 function appPostScript(moduleInfo, script) {
-    var id = 1 + Math.floor(Math.random() * 6);
+	var id = 1 + Math.floor(Math.random() * 6);
 	var data = {};
-    var applyUrl = "/_api/";
+	var applyUrl = "/_api/";
 	if(script =="ks_tar_install.sh"){
-	data["soft_name"] = moduleInfo.name;
-	data["soft_install_version"] = moduleInfo.version;
+		data["soft_name"] = moduleInfo.name;
+		data["soft_install_version"] = moduleInfo.version;
 	}else{
-	data["softcenter_home_url"] = softcenterUrl;
-	data["softcenter_installing_todo"] = moduleInfo.name;
+		data["softcenter_home_url"] = softcenterUrl;
+		data["softcenter_installing_todo"] = moduleInfo.name;
 	}
-    
-    if(script == "ks_app_install.sh") {
-    data["softcenter_installing_tar_url"] = moduleInfo.tar_url;
-    data["softcenter_installing_md5"] = moduleInfo.md5;
-    data["softcenter_installing_version"] = moduleInfo.version;
-    data[moduleInfo.name + "_title"] = moduleInfo.title;
-    }
+	
+	if(script == "ks_app_install.sh") {
+		data["softcenter_installing_tar_url"] = moduleInfo.tar_url;
+		data["softcenter_installing_md5"] = moduleInfo.md5;
+		data["softcenter_installing_version"] = moduleInfo.version;
+		data[moduleInfo.name + "_title"] = moduleInfo.title;
+	}
 	
 	var postData = {"id": id, "method":script, "params":[], "fields": data};
 	
 	var success = function(data) {
-		//console.log("success",data);
 		$('.popover').html(data.result);
 	};
 	var error = function(data) {
-		//请求错误！
 		$('.popover').html('<font color=red>软件中心异常！</font>');
 	};
 	if(script =="ks_tar_install.sh"){
@@ -691,12 +684,12 @@ function appPostScript(moduleInfo, script) {
 		CheckX();
 	}
 	$.ajax({
-	  type: "POST",
-	  url: "/_api/",
-	  data: JSON.stringify(postData),
-	  success: success,
-	  error: error,
-	  dataType: "json"
+		type: "POST",
+		url: "/_api/",
+		data: JSON.stringify(postData),
+		success: success,
+		error: error,
+		dataType: "json"
 	});
 }
 function changeButton(obj){
@@ -729,14 +722,13 @@ function checkInstallStatus(){
 	});
 }
 function CheckX() {
-	//$('.popover').html('请稍后……');
 	changeButton(true);
 	$(window).scrollTop(0);
 	layer.msg('\<\div style="padding: 7px;font-weight: 500;" id="23333">\<\/div>', {
 		shade: 0.8,
 		scrollbar: false,
 		offset: '400px',
-		area: '420px', //宽高
+		area: '420px',
 		time: 0
 	});
 	TimeOut = window.setInterval(checkInstallStatus, 200);
@@ -744,7 +736,6 @@ function CheckX() {
 function softCenterInit(){
 	$.getJSON("/_api/softcenter_", function(resp) {
 		appsInfo=resp.result[0];
-		//get_extra_json(appsInfo["softcenter_extra_url"]);
 		getSoftCenter(appsInfo);
 		if(resp.softcenter_installing_status != '0' && resp.softcenter_installing_status){
 			CheckX();
@@ -783,7 +774,6 @@ function uploadApp(){
 		}
 	});
 }
-
 function get_log(s){
 	$.ajax({
 		url: '/_temp/soft_log.txt',
@@ -809,24 +799,22 @@ function get_log(s){
 				noChange = 0;
 			}
 			if (noChange > 8000) {
-				//tabSelect("app1");
 				return false;
 			} else {
-				setTimeout("get_log(1);", 400); //100 is radical but smooth!
+				setTimeout("get_log(1);", 400);
 			}
 			retArea.value = response;
 			retArea.scrollTop = retArea.scrollHeight;
 			_responseLen = response.length;
 		},
-        error: function(xhr, status, error) {
+		error: function(xhr, status, error) {
 			if(s){
 				$('.popover').html('服务器出错，请稍候再试！');
 				changeButton(false);
 			}
-        }
+		}
 	});
 }
-
 function save_extra_now(arg){
 	var dbus2 = {};
 	dbus2["softcenter_extra_url"] = E("_softcenter_extra_url").value;
@@ -847,69 +835,54 @@ function save_extra_now(arg){
 		}
 	});
 }
-
 function init_soft(){
-    init_softcenter_layout();
+	init_softcenter_layout();
 	layer_show();
 }
-
 function layer_show(){
-		// layer.msg('欢迎来到koolshare LEDE-X64 软件中心！');
-			
-		//layer.alert('内容', {
-		//	icon: 1,
-		//	skin: 'layer-ext-moon'
-		//})
 		$('#github_png').on('click', function() {
-			//iframe层-父子操作
 			layer.open({
-			  type: 2,
-			  area: ['750px', '550px'],
-			  fixed: false, //不固定
-			  maxmin: true,
-			  content: 'http://ip111.cn/'
+				type: 2,
+				area: ['780px', '450px'],
+				fixed: false, //不固定
+				maxmin: true,
+				content: 'http://ip.koolcenter.com/all'
 			});
 		});
 }
-
-function init_softcenter_layout(){
-    var SCREEN_WIDTH = $(document).width();
-    if(!cookie.get('softcenterlayout')){
-        cookie.set('softcenterlayout', 1);
-    }
-    if (cookie.get('softcenterlayout') == '1') {
-        $("#softcenter_layout_switch").attr("class", "narrow");
-        //$(".box, ul.nav.nav-tabs, .col").css("width", "1332px")
-        $(".box, ul.nav.nav-tabs, .col").css("max-width", "1332px")
-        $(".box, ul.nav.nav-tabs, .col").css("min-width", "1072px")
-        $("#softcenterlayout_switch").html('<i class="icon-chevron-left"></i><i class="icon-chevron-right"></i>');
-    }else{
-        $("#softcenter_layout_switch").attr("class", "wide");
-        //$(".box, ul.nav.nav-tabs, .col").css("width", "auto");
-        $(".box, ul.nav.nav-tabs, .col").css("max-width", "100%");
-        $(".box, ul.nav.nav-tabs, .col").css("min-width", "20%");
-        $("#softcenter_layout_switch").html('<i class="icon-chevron-right"></i><i class="icon-chevron-left"></i>');
-    }
+function init_softcenter_layout() {
+	var SCREEN_WIDTH = $(document).width();
+	if (!cookie.get('softcenterlayout')) {
+		cookie.set('softcenterlayout', 1);
+	}
+	if (cookie.get('softcenterlayout') == '1') {
+		$("#softcenter_layout_switch").attr("class", "narrow");
+		$(".box, ul.nav.nav-tabs, .col").css("max-width", "1332px")
+		$(".box, ul.nav.nav-tabs, .col").css("min-width", "1072px")
+		$("#softcenterlayout_switch").html('<i class="icon-chevron-left"></i><i class="icon-chevron-right"></i>');
+	} else {
+		$("#softcenter_layout_switch").attr("class", "wide");
+		$(".box, ul.nav.nav-tabs, .col").css("max-width", "100%");
+		$(".box, ul.nav.nav-tabs, .col").css("min-width", "20%");
+		$("#softcenter_layout_switch").html('<i class="icon-chevron-right"></i><i class="icon-chevron-left"></i>');
+	}
 }
 function switch_layout() {
-    var SCREEN_WIDTH = $(document).width();
-    if($("#softcenter_layout_switch").hasClass("narrow")) {
-        $("#softcenter_layout_switch").attr("class", "wide");
-        //$(".box, ul.nav.nav-tabs, .col").css("width", "auto");
-        $(".box, ul.nav.nav-tabs, .col").css("max-width", "100%");
-        $(".box, ul.nav.nav-tabs, .col").css("min-width", "20%");
-        $("#softcenter_layout_switch").html('<i class="icon-chevron-right"></i><i class="icon-chevron-left"></i>');
-        cookie.set('softcenterlayout', 0);
-    } else {
-        $("#softcenter_layout_switch").attr("class", "narrow");
-        //$(".box, ul.nav.nav-tabs, .col").css("width", "1332px")
-        $(".box, ul.nav.nav-tabs, .col").css("max-width", "1332px");
-        $(".box, ul.nav.nav-tabs, .col").css("min-width", "1072px")
-        $("#softcenter_layout_switch").html('<i class="icon-chevron-left"></i><i class="icon-chevron-right"></i>');
-        cookie.set('softcenterlayout', 1);
-    }
+	var SCREEN_WIDTH = $(document).width();
+	if ($("#softcenter_layout_switch").hasClass("narrow")) {
+		$("#softcenter_layout_switch").attr("class", "wide");
+		$(".box, ul.nav.nav-tabs, .col").css("max-width", "100%");
+		$(".box, ul.nav.nav-tabs, .col").css("min-width", "20%");
+		$("#softcenter_layout_switch").html('<i class="icon-chevron-right"></i><i class="icon-chevron-left"></i>');
+		cookie.set('softcenterlayout', 0);
+	} else {
+		$("#softcenter_layout_switch").attr("class", "narrow");
+		$(".box, ul.nav.nav-tabs, .col").css("max-width", "1332px");
+		$(".box, ul.nav.nav-tabs, .col").css("min-width", "1072px")
+		$("#softcenter_layout_switch").html('<i class="icon-chevron-left"></i><i class="icon-chevron-right"></i>');
+		cookie.set('softcenterlayout', 1);
+	}
 }
-	
 </script>
 	<div class="box">
 		<div class="heading">
@@ -957,6 +930,8 @@ function switch_layout() {
 		<li><a href="javascript:void(0);" onclick="tabSelect('app2');" id="app2-server1-advanced-tab"><i class="icon-globe"></i> 未安装</a></li>
 		<li><a href="javascript:void(0);" onclick="tabSelect('app3');" id="app3-server1-keys-tab"><i class="icon-tools"></i> 离线安装</a></li>
 		<li><a href="javascript:void(0);" onclick="tabSelect('app4');" id="app4-server1-status-tab"><i class="icon-info"></i> 关于我们</a></li>
+		<span id="overlay_status" style="float:right;margin-right:5px;margin-top:0px;display: none;" class="td left"><div id="overlay_status_text" style="font-size: 12px;min-width: 270px;" class="cbi-progressbar"><div></div></div></span>
+		
 	</ul>
 	<div class="box boxr1">
 		<div class="heading">已安装软件列表&nbsp;&nbsp;&nbsp;<span class="popover"></span></div>
@@ -1006,14 +981,12 @@ function switch_layout() {
 		<div class="heading">关于我们</div>
 		<div class="content">
 			<div class="tabContent4">
-				<!--app info -->
 				<ul style="margin-left: 30px;">
 					<li>我们是一群致力于服务大众的个人自发的群体，来自全国各地都聚集在 <a href="http://koolshare.cn" target="_blank"><font color="#FF6347"> KoolShare </font></a>论坛。</li>
 					<li><font color="#8470FF">参与开发的人员：@小宝、@fw867、@sadog、@JSmonkey、@HOUZI(｡◕‿&nbsp;&nbsp;◕｡)、KoolShare开发组、以及其他人员。</font></li>
 					<li><font color="#1E90FF">本软件中心属于开源项目，任何组织或个人均可自由开发。</font></li>
 					<li>软件中心目前处于测试阶段，如在使用中出现问题请至 <a href="http://koolshare.cn/forum-97-1.html" target="_blank"><font color="#FF6347">KoolShare LEDE</font></a> 版块反馈。</li>
 				</ul>
-				<!--app info -->
 			</div>
 		</div>
 	</div>

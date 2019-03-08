@@ -1,9 +1,9 @@
 {
-"version":"2.1.8",
-"md5":"c086fbc4b8b038357e0c83cb83bc96ab",
+"version":"2.2.1",
+"md5":"e2871cabb7971cccd7a997be8efe3766",
 "home_url":"Module_koolss.asp",
 "title":"科学上网插件",
 "description":"轻松科学上网~",
-"changelog":"回滚到2.1.6",
-"build_date":"2018-10-18_22:59:54"
+"changelog":"修复obfs",
+"build_date":"2019-03-07_00:32:21"
 }
